@@ -1,1 +1,13 @@
-<p>soldiers works!</p>
+<div *ngIf="soldiers">
+    <table>
+        <tbody>
+            <tr *ngFor="let soldier of soldiers">
+                <td>
+                    <a routerLink="/soldier/{{soldier.id}}">
+                         {{soldier.name}}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
