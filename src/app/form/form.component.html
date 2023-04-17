@@ -1,0 +1,10 @@
+<div>
+    <h2>Create new Game.</h2>
+    <div>
+        <form (submit)="createGame()">
+            <input type="number" [(ngModel)]="soldiers" placeholder="soldiers" name="soldiers">
+            <input type="number" [(ngModel)]="empires" placeholder="empires" name="empires">
+            <input type="submit" value="Create">
+        </form>
+    </div>
+</div>
