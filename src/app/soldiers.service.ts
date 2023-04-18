@@ -9,17 +9,30 @@ import { Soldier } from './soldier';
 })
 export class SoldiersService {
 
-  private _apiUrl = 'https://localhost:7038/'
-  private _soldierUrl = 'soldier'
+  private _apiUrl = 'https://localhost:7038/';
+  private _soldierUrl = 'soldier';
+  private _gameUrl = 'game';
 
   constructor(private http: HttpClient) { }
 
-  getSoldiers(): Observable<Soldier[]> {
-    return this.http.get<Soldier[]>(`${this._apiUrl + this._soldierUrl}`);
+  getSoldiers(id: number): Observable<Soldier[]> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/${this._soldierUrl}`;
+    return this.http.get<Soldier[]>(url);
   }
 
   getSoldier(id: number): Observable<Soldier> {
     return this.http.get<Soldier>(`${this._apiUrl + this._soldierUrl}/${id}`);
   }
+
+  getRebels(id: number): Observable<Soldier[]> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/rebel`;
+    return this.http.get<Soldier[]>(url);
+  }
+
+  getEmpires(id: number): Observable<Soldier[]> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/empire`;
+    return this.http.get<Soldier[]>(url);
+  }
+
 
 }

@@ -1,4 +1,5 @@
 <div *ngIf="soldiers">
+    <h2>{{ team | uppercase}}S</h2>
     <table>
         <tbody>
             <tr *ngFor="let soldier of soldiers">
@@ -11,3 +12,6 @@
         </tbody>
     </table>
 </div>
+<button (click)="changeTeam('rebel')">Rebels</button>
+<button (click)="changeTeam('empire')">Empires</button>
+<button (click)="backToAll()">All</button>

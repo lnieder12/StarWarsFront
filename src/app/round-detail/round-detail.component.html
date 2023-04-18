@@ -1,0 +1,14 @@
+<div *ngIf="round">
+    <h2>{{ round.id }}</h2>
+    <div>
+        <label>Attacker : </label>
+        <a routerLink="/soldier/{{round.attacker.id}}">{{ round.attacker.name }}</a>
+        <label>Defender : </label>
+        <a routerLink="/soldier/{{round.defender.id}}">{{ round.defender.name }}</a>
+        <label>Damage : {{ round.damage }}</label>
+        <div *ngIf="round.isDead">
+            <label>{{ round.defender.name }} is dead this round.</label>
+
+        </div>
+    </div>
+</div>

@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { Game } from './game';
+import { Round } from './round';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,9 +15,21 @@ export class GameService {
 
   constructor(private http: HttpClient) { }
 
-  createGame(rebels: number, empires: number): boolean {
-    const url = `${this._apiUrl + this._gameUrl}?rebels=${rebels}&empires=${empires}`
-    return this.http.post<boolean>(url, );
+  createGame(rebels: number, empires: number): Observable<Game> {
+    const url = `${this._apiUrl + this._gameUrl}/${rebels}/${empires}`
+    return this.http.get<Game>(url, {});
   }
 
+  getGame(id: number): Observable<Game> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}`;
+    return this.http.get<Game>(url);
+  }
+
+  getRounds(id: number): Observable<Round[]> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/round`
+    return this.http.get<Round[]>(url);
+      
+  }
+
+  
 }

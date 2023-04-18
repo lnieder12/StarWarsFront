@@ -1,0 +1,17 @@
+<div *ngIf="game">
+    <h2>Game #{{ game.id }}</h2>
+    <div>
+        <p>
+            <label>This game has </label>
+            <a>{{ nbRebels }}</a>
+            <label> Rebels and </label>
+            <a>{{ nbEmpires }}</a>
+            <label> Empires.</label>
+        </p>
+        <p>
+            <label>Fighting for </label>
+            <a>{{ nbRounds }}</a>
+            <label> rounds.</label>
+        </p>
+    </div>
+</div>

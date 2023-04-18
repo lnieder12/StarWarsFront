@@ -8,13 +8,17 @@ import { FormComponent } from './form/form.component';
 import { FormsModule } from '@angular/forms';
 import { SoldiersComponent } from './soldiers/soldiers.component';
 import { DetailComponent } from './detail/detail.component';
+import { RoundDetailComponent } from './round-detail/round-detail.component';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
     SoldiersComponent,
-    DetailComponent
+    DetailComponent,
+    RoundDetailComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
