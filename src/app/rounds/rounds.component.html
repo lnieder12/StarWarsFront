@@ -1,0 +1,11 @@
+<ol class="list">
+    <ng-container *ngFor="let round of rounds">
+        <li>
+            <a routerLink="/round/{{round.id}}">Round</a>
+        </li>
+    </ng-container>
+</ol>
+
+<ng-container *ngIf="!rounds">
+    Couldn't find rounds.
+</ng-container>

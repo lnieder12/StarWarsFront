@@ -1,0 +1,27 @@
+<div *ngIf="scores">
+    <clr-datagrid>
+        <clr-dg-column>Soldier</clr-dg-column>
+        <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">Score</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let score of scores">
+            <clr-dg-cell>
+                <a routerLink="/soldier/{{score.soldier.id}}">{{score.soldier.name}}</a>
+            </clr-dg-cell>
+            <clr-dg-cell>
+                <span>{{score.score}}</span>
+            </clr-dg-cell>
+        </clr-dg-row>
+
+
+        <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="scores.length">
+                <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Rows per page</clr-dg-page-size>
+                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                of {{pagination.totalItems}} rows
+            </clr-dg-pagination>
+        </clr-dg-footer>
+
+    </clr-datagrid>
+
+
+</div>

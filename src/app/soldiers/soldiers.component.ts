@@ -16,16 +16,13 @@ import { ClrDatagridStateInterface } from '@clr/angular';
 })
 export class SoldiersComponent {
 
-  @Input() rebels: Soldier[] = [];
-  @Input() empires: Soldier[] = [];
+  @Input() rebels?: Soldier[];
+  @Input() empires?: Soldier[];
 
   @Input() list: number[] = [];
 
-  @Input() team: string = "soldier";
-
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private soldierService: SoldiersService
   ) { }
 
@@ -40,32 +37,12 @@ export class SoldiersComponent {
       of(this.rebels.length, this.empires.length)
         .pipe(max())
         .subscribe(x => {
-          // this.list = [...new Array(x).map((v:number, i:number) => i)];
-
           this.list.length = x;
           this.list.fill(1, 0)
           this.list = this.list.map((v, i) => v = i);
-          // this.list.forEach((v:number) => console.log(v));
         });
     });
 
-
-
-
-  }
-
-  searchTeam(): void {
-    this.route.queryParamMap
-      .subscribe(params => {
-        if (params.has("team")) {
-          const tm = params.get("team");
-          if (tm == "rebel" || tm == "empire") {
-            this.team = tm?.toString();
-
-          }
-
-        }
-      });
   }
 
   ngOnInit(): void {

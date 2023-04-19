@@ -5,3 +5,7 @@
         <label>Attack : {{ soldier.attack }}</label>
     </div>
 </div>
+
+<ng-container *ngIf="!soldier">
+    Couldn't find this soldier.
+</ng-container>

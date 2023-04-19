@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Game } from '../game';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../game.service';
 import { SoldiersService } from '../soldiers.service';
 
@@ -21,6 +21,7 @@ export class GameComponent {
   @Input() nbEmpires?: number;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private gameService: GameService,
     private soldierService: SoldiersService
@@ -38,6 +39,10 @@ export class GameComponent {
         this.soldierService.getRebels(id)
           .subscribe(rebels => this.nbRebels = rebels.length);
       });
+  }
+
+  goToScore(): void {
+    this.router.navigateByUrl(`game/${this.game?.id}/scores`);
   }
 
   ngOnInit(): void {

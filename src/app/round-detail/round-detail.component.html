@@ -6,9 +6,13 @@
         <label>Defender : </label>
         <a routerLink="/soldier/{{round.defender.id}}">{{ round.defender.name }}</a>
         <label>Damage : {{ round.damage }}</label>
-        <div *ngIf="round.isDead">
+        <ng-container *ngIf="round.isDead">
             <label>{{ round.defender.name }} is dead this round.</label>
 
-        </div>
+        </ng-container>
     </div>
 </div>
+
+<ng-container *ngIf="!round">
+    Couldn't find this round.
+</ng-container>

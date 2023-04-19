@@ -3,15 +3,16 @@
     <div>
         <p>
             <label>This game has </label>
-            <a>{{ nbRebels }}</a>
-            <label> Rebels and </label>
-            <a>{{ nbEmpires }}</a>
-            <label> Empires.</label>
+            <a routerLink="/game/{{game.id}}/soldiers">{{ nbRebels }} Rebels and {{ nbEmpires }} Empires.</a>
         </p>
         <p>
             <label>Fighting for </label>
-            <a>{{ nbRounds }}</a>
-            <label> rounds.</label>
+            <a routerLink="/game/{{game.id}}/rounds">{{ nbRounds }} rounds.</a>
         </p>
     </div>
+    <button (click)="goToScore()">View score</button>
 </div>
+
+<ng-container *ngIf="!game">
+    Couldn't find this game.
+</ng-container>

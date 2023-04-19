@@ -12,7 +12,10 @@ import { RoundDetailComponent } from './round-detail/round-detail.component';
 import { GameComponent } from './game/game.component';
 
 import { ClarityModule } from '@clr/angular';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RoundsComponent } from './rounds/rounds.component';
+import { FightComponent } from './fight/fight.component';
+import { ScoreTableComponent } from './score-table/score-table.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
     SoldiersComponent,
     DetailComponent,
     RoundDetailComponent,
-    GameComponent    
+    GameComponent,
+    RoundsComponent,
+    FightComponent,
+    ScoreTableComponent    
   ],
   imports: [
     BrowserModule,

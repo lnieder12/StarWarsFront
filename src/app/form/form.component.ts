@@ -27,7 +27,7 @@ export class FormComponent {
       this.gameService.createGame(this.soldiers, this.empires)
         .subscribe(game => {
           this.game = game;
-          this.router.navigateByUrl(`/game/${game.id}/soldiers`);
+          this.router.navigateByUrl(`/game/${game.id}/fight`);
         });
     }
   }

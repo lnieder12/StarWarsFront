@@ -31,5 +31,14 @@ export class GameService {
       
   }
 
-  
+  getFight(id: number, idSoldier: number): Observable<Round> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/soldier/${idSoldier}/attack`;
+    return this.http.post<Round>(url, []);
+  }
+
+  getSoldierDamage(id: number, idSoldier: number): Observable<number> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/soldier/${idSoldier}/damage`;
+    return this.http.get<number>(url);
+  }
+
 }
