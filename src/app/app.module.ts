@@ -11,6 +11,9 @@ import { DetailComponent } from './detail/detail.component';
 import { RoundDetailComponent } from './round-detail/round-detail.component';
 import { GameComponent } from './game/game.component';
 
+import { ClarityModule } from '@clr/angular';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,13 +21,15 @@ import { GameComponent } from './game/game.component';
     SoldiersComponent,
     DetailComponent,
     RoundDetailComponent,
-    GameComponent
+    GameComponent    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ClarityModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

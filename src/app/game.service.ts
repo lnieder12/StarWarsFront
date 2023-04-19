@@ -17,7 +17,7 @@ export class GameService {
 
   createGame(rebels: number, empires: number): Observable<Game> {
     const url = `${this._apiUrl + this._gameUrl}/${rebels}/${empires}`
-    return this.http.get<Game>(url, {});
+    return this.http.post<Game>(url, {});
   }
 
   getGame(id: number): Observable<Game> {

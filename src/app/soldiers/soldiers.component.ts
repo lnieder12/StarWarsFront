@@ -6,6 +6,8 @@ import { SoldiersService } from '../soldiers.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { forkJoin, max, of } from 'rxjs';
+import { ClrDatagridStateInterface } from '@clr/angular';
 
 @Component({
   selector: 'app-soldiers',
@@ -14,7 +16,10 @@ import { HttpParams } from '@angular/common/http';
 })
 export class SoldiersComponent {
 
-  @Input() soldiers: Soldier[] = [];
+  @Input() rebels: Soldier[] = [];
+  @Input() empires: Soldier[] = [];
+
+  @Input() list: number[] = [];
 
   @Input() team: string = "soldier";
 
@@ -24,26 +29,29 @@ export class SoldiersComponent {
     private soldierService: SoldiersService
   ) { }
 
-  getAll(team: string): void {
+  getAll(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (team == "rebel") {
-      this.soldierService.getRebels(id)
-        .subscribe(soldiers => this.soldiers = soldiers);
-    }
-    else if (team == "empire") {
-      this.soldierService.getEmpires(id)
-        .subscribe(soldiers => this.soldiers = soldiers);
-    }
-    else {
-      this.soldierService.getSoldiers(id)
-        .subscribe(soldiers => this.soldiers = soldiers);
-    }
+    forkJoin({
+      rebels: this.soldierService.getRebels(id),
+      empires: this.soldierService.getEmpires(id)
+    }).subscribe(results => {
+      this.rebels = results.rebels;
+      this.empires = results.empires
+      of(this.rebels.length, this.empires.length)
+        .pipe(max())
+        .subscribe(x => {
+          // this.list = [...new Array(x).map((v:number, i:number) => i)];
 
-  }
+          this.list.length = x;
+          this.list.fill(1, 0)
+          this.list = this.list.map((v, i) => v = i);
+          // this.list.forEach((v:number) => console.log(v));
+        });
+    });
 
-  getRebels(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.soldierService.getRebels
+
+
+
   }
 
   searchTeam(): void {
@@ -57,32 +65,11 @@ export class SoldiersComponent {
           }
 
         }
-        this.getAll(this.team);
       });
   }
 
-  changeTeam(team: string): void {
-    const options = team ?
-      {params: new HttpParams().set('team', team) } : {};
-    const url = this.urlWithoutOptions(this.router.url) + "?" + options.params;
-    console.log(url);
-    this.router.navigateByUrl(url);
-  }
-
-  backToAll(): void {
-    this.router.navigateByUrl(this.urlWithoutOptions(this.router.url));
-  }
-
-  urlWithoutOptions(url: string): string {
-    if(url.indexOf("?") >= 0)
-      return url.substring(0, url.indexOf("?"));
-    else
-      return url;
-  }
-
   ngOnInit(): void {
-    this.searchTeam();
-    console.log("init")
+    this.getAll();
   }
 
 }
