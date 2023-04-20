@@ -14,7 +14,6 @@ import { GameComponent } from './datas/game/game.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RoundsComponent } from './lists/rounds/rounds.component';
-import { FightComponent } from './datas/fight/fight.component';
 import { ScoreTableComponent } from './lists/score-table/score-table.component';
 import { GamesComponent } from './lists/games/games.component'
 
@@ -27,7 +26,6 @@ import { GamesComponent } from './lists/games/games.component'
     RoundDetailComponent,
     GameComponent,
     RoundsComponent,
-    FightComponent,
     ScoreTableComponent,
     GamesComponent    
   ],

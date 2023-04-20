@@ -27,10 +27,10 @@ export class FormComponent {
 
   createGame(): void {
     if (this.soldiers && this.empires) {
-      this.gameService.createGame(this.soldiers, this.empires)
+      this.gameService.createGame(this.soldiers, this.empires, this.nbRound ?? 0)
         .subscribe(game => {
           this.game = game;
-          this.router.navigateByUrl(`/game/${game.id}/fight`);
+          this.router.navigateByUrl(`/game/${game.id}`);
         });
     }
   }

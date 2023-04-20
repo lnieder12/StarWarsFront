@@ -16,3 +16,37 @@
 <ng-container *ngIf="!game">
     Couldn't find this game.
 </ng-container>
+
+<div *ngIf="round && show; else wait">
+    <h3>Round #{{nbRounds}}</h3>
+
+    <p>
+        {{round.attacker.name}} attacks {{round.defender.name}} for {{round.damage}} damage.
+    </p>
+    <p>
+        <ng-container *ngIf="!round.isDead">
+            {{round.defender.name}} has {{round.defender.health}} hp left.
+        </ng-container>
+
+        <ng-container *ngIf="round.isDead">
+            {{round.defender.name}} died.
+        </ng-container>
+    </p>
+
+
+</div>
+
+<ng-template #wait>
+    <ng-container *ngIf="show;else wait2">
+        Click for next fight.
+    </ng-container>
+</ng-template>
+<ng-template #wait2>
+    <ng-container *ngIf="round; else wait3">Please wait...</ng-container>
+</ng-template>
+<ng-template #wait3>Fights are done.</ng-template>
+
+<div>
+    <button (disabled)="show" (click)="showFight()">Next</button>
+    <button (disabled)="!show" (click)="skip()">Skip</button>
+</div>

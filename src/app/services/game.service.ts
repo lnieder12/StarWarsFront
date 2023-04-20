@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Game } from '../interfaces/game';
@@ -15,9 +15,10 @@ export class GameService {
 
   constructor(private http: HttpClient) { }
 
-  createGame(rebels: number, empires: number): Observable<Game> {
-    const url = `${this._apiUrl + this._gameUrl}/${rebels}/${empires}`
-    return this.http.post<Game>(url, {});
+  createGame(rebels: number, empires: number, nbRound: number): Observable<Game> {
+    const options = { params: new HttpParams().set('nbRound', nbRound) };
+    const url = `${this._apiUrl + this._gameUrl}/${rebels}/${empires}`;
+    return this.http.post<Game>(url, {}, options);
   }
 
   getGame(id: number): Observable<Game> {
@@ -28,16 +29,25 @@ export class GameService {
   getRounds(id: number): Observable<Round[]> {
     const url = `${this._apiUrl + this._gameUrl}/${id}/round`
     return this.http.get<Round[]>(url);
-      
   }
 
-  getFight(id: number, idSoldier: number): Observable<Round> {
-    const url = `${this._apiUrl + this._gameUrl}/${id}/soldier/${idSoldier}/attack`;
-    return this.http.post<Round>(url, []);
+  getFight(id: number): Observable<Round> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/fight`;
+    return this.http.get<Round>(url);
+  }
+
+  doAllFight(id: number): Observable<boolean> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/fightall`;
+    return this.http.get<boolean>(url);
   }
 
   getSoldierDamage(id: number, idSoldier: number): Observable<number> {
     const url = `${this._apiUrl + this._gameUrl}/${id}/soldier/${idSoldier}/damage`;
+    return this.http.get<number>(url);
+  }
+
+  getNbRounds(id: number): Observable<number> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/round/nb`;
     return this.http.get<number>(url);
   }
 

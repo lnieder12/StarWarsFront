@@ -7,7 +7,6 @@ import { FormComponent } from './form/form.component';
 import { RoundDetailComponent } from './datas/round-detail/round-detail.component';
 import { GameComponent } from './datas/game/game.component';
 import { RoundsComponent } from './lists/rounds/rounds.component';
-import { FightComponent } from './datas/fight/fight.component';
 import { ScoreTableComponent } from './lists/score-table/score-table.component';
 
 const routes: Routes = [
@@ -16,7 +15,6 @@ const routes: Routes = [
   { path: "soldier/:id", component: DetailComponent },
   { path: "round/:id", component: RoundDetailComponent },
   { path: "game/:id/rounds", component: RoundsComponent },
-  { path: "game/:id/fight", component: FightComponent },
   { path: "game/:id/scores", component: ScoreTableComponent },
   { path: '', component: FormComponent },
   { path: '**', redirectTo: '' }
