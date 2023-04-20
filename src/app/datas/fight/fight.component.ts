@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 
-import { Round } from '../round';
-import { Soldier } from '../soldier';
+import { Round } from '../../interfaces/round';
+import { Soldier } from '../../interfaces/soldier';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameService } from '../game.service';
-import { SoldiersService } from '../soldiers.service';
+import { GameService } from '../../services/game.service';
+import { SoldiersService } from '../../services/soldiers.service';
 import { Observable } from 'rxjs';
+import { NbRounds } from '../../nbRounds';
 
 @Component({
   selector: 'app-fight',
@@ -19,6 +20,8 @@ export class FightComponent {
   @Input() show: boolean = false;
 
   @Input() nbRound: number = 0;
+
+  maxRound?: number;
 
   id: number = 0;
 
@@ -35,12 +38,18 @@ export class FightComponent {
   }
 
   showFight(): void {
+    var bool = false;
+    if (this.maxRound !== undefined)
+      bool = this.maxRound <= this.nbRound;
+    if (bool)
+      this.router.navigateByUrl(`/game/${this.id}`);
+    else {
     this.show = false;
     this.getRandomSoldier(this.id)
       .subscribe(soldier => {
         this.getFight(this.id, soldier.id)
           .subscribe(rnd => {
-            if(rnd == null)
+            if (rnd == null)
               this.router.navigateByUrl(`/game/${this.id}`);
             else {
               this.round = rnd;
@@ -49,12 +58,13 @@ export class FightComponent {
             }
           });
       });
+    }
   }
 
   getFight(id: number, soldierId: number): Observable<Round> {
     return this.gameService.getFight(id, soldierId);
 
-}
+  }
 
   getId(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -70,19 +80,29 @@ export class FightComponent {
 
   skip(): void {
     this.show = false;
-    this.getRandomSoldier(this.id)
-      .subscribe(soldier =>  {
-        this.getFight(this.id, soldier.id)
-          .subscribe(rnd => {
-            if(rnd == null)
-              this.router.navigateByUrl(`/game/${this.id}`);
-            else
-              this.skip();
-          });
-      });
+    var bool = false;
+    if (this.maxRound !== undefined)
+      bool = this.maxRound <= this.nbRound;
+    if (bool)
+      this.router.navigateByUrl(`/game/${this.id}`);
+    else {
+      this.getRandomSoldier(this.id)
+        .subscribe(soldier => {
+          this.getFight(this.id, soldier.id)
+            .subscribe(rnd => {
+              if (rnd == null)
+                this.router.navigateByUrl(`/game/${this.id}`);
+              else {
+                this.nbRound++;
+                this.skip();
+              }
+            });
+        });
+    }
   }
 
   ngOnInit(): void {
+    this.maxRound = NbRounds.nb;
     this.getId();
     this.showFight();
   }

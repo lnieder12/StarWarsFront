@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
-import { Round } from '../round';
+import { Round } from '../../interfaces/round';
 import { ActivatedRoute } from '@angular/router';
-import { RoundService } from '../round.service';
+import { RoundService } from 'src/app/services/round.service';
 
 
 @Component({

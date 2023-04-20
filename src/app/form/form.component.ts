@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { GameService } from '../game.service';
+import { GameService } from '../services/game.service';
 
-import { Game } from '../game';
+import { Game } from '../interfaces/game';
 import { Router } from '@angular/router';
+import { NbRounds } from '../nbRounds';
 
 @Component({
   selector: 'app-form',
@@ -13,9 +14,11 @@ export class FormComponent {
 
   public game?: Game;
 
-  @Input() soldiers: number = 0;
+  @Input() soldiers?: number;
 
-  @Input() empires: number = 0;
+  @Input() empires?: number;
+
+  @Input() nbRound?: number;
 
   constructor(
     private router: Router,
@@ -30,6 +33,10 @@ export class FormComponent {
           this.router.navigateByUrl(`/game/${game.id}/fight`);
         });
     }
+  }
+
+  ngOnDestroy(): void {
+    NbRounds.nb = this.nbRound;
   }
 
 }

@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { Score } from '../scores';
-import { SoldiersService } from '../soldiers.service';
-import { GameService } from '../game.service';
+import { Score } from '../../interfaces/scores';
+import { SoldiersService } from '../../services/soldiers.service';
+import { GameService } from '../../services/game.service';
 import { ActivatedRoute } from '@angular/router';
 import { ClrDatagridSortOrder } from '@clr/angular';
-import { ScoreFilter } from '../scoreFilter';
+import { ScoreFilter } from '../../scoreFilter';
 
 @Component({
   selector: 'app-score-table',

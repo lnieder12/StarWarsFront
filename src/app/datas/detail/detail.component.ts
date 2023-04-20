@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { Soldier } from '../soldier';
-import { SoldiersService } from '../soldiers.service';
+import { Soldier } from '../../interfaces/soldier';
+import { SoldiersService } from '../../services/soldiers.service';
 
 import { ActivatedRoute } from '@angular/router';
 

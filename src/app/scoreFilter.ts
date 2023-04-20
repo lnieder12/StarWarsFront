@@ -1,5 +1,5 @@
 import { ClrDatagridNumericFilterInterface } from "@clr/angular";
-import { Score } from "./scores";
+import { Score } from "./interfaces/scores";
 
 
 export class ScoreFilter implements ClrDatagridNumericFilterInterface<Score> {

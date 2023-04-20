@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DetailComponent } from './detail/detail.component';
-import { SoldiersComponent } from './soldiers/soldiers.component';
+import { DetailComponent } from './datas/detail/detail.component';
+import { SoldiersComponent } from './lists/soldiers/soldiers.component';
 import { FormComponent } from './form/form.component';
-import { RoundDetailComponent } from './round-detail/round-detail.component';
-import { GameComponent } from './game/game.component';
-import { RoundsComponent } from './rounds/rounds.component';
-import { FightComponent } from './fight/fight.component';
-import { ScoreTableComponent } from './score-table/score-table.component';
+import { RoundDetailComponent } from './datas/round-detail/round-detail.component';
+import { GameComponent } from './datas/game/game.component';
+import { RoundsComponent } from './lists/rounds/rounds.component';
+import { FightComponent } from './datas/fight/fight.component';
+import { ScoreTableComponent } from './lists/score-table/score-table.component';
 
 const routes: Routes = [
   { path: "game/:id", component: GameComponent },

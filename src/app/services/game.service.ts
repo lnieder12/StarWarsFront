@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Game } from './game';
-import { Round } from './round';
+import { Game } from '../interfaces/game';
+import { Round } from '../interfaces/round';
 
 @Injectable({
   providedIn: 'root'

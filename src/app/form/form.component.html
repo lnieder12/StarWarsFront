@@ -2,8 +2,11 @@
     <h2>Create new Game.</h2>
     <div>
         <form (submit)="createGame()">
-            <input type="number" [(ngModel)]="soldiers" placeholder="rebels" name="soldiers">
-            <input type="number" [(ngModel)]="empires" placeholder="empires" name="empires">
+            <p>
+                <input type="number" [(ngModel)]="soldiers" placeholder="rebels" name="soldiers">
+                <input type="number" [(ngModel)]="empires" placeholder="empires" name="empires">
+            </p>
+            <input type="number" [(ngModel)]="nbRound" placeholder="rounds" name="nbRounds">
             <input type="submit" value="Create">
         </form>
     </div>

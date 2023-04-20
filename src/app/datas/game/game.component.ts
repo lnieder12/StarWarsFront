@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { Game } from '../game';
+import { Game } from '../../interfaces/game';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameService } from '../game.service';
-import { SoldiersService } from '../soldiers.service';
+import { GameService } from '../../services/game.service';
+import { SoldiersService } from '../../services/soldiers.service';
 
 @Component({
   selector: 'app-game',

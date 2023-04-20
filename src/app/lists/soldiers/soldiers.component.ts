@@ -1,14 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { Soldier } from '../soldier';
-import { SoldiersService } from '../soldiers.service';
-import { Rebel_Empire } from '../rebel-empire';
+
+import { SoldiersService } from '../../services/soldiers.service';
+import { Rebel_Empire } from '../../rebel-empire';
 
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
 import { forkJoin, max, of } from 'rxjs';
-import { ClrDatagridStateInterface } from '@clr/angular';
 
 @Component({
   selector: 'app-soldiers',

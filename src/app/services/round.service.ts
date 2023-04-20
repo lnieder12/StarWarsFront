@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Round } from './round';
+import { Round } from '../interfaces/round';
 
 @Injectable({
   providedIn: 'root'
