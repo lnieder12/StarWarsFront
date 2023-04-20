@@ -1,21 +1,23 @@
-<div *ngIf="rebels && empires && list">
+<div *ngIf="soldiers; else notFound">
     <clr-datagrid>
-        <clr-dg-column>Rebels</clr-dg-column>
-        <clr-dg-column>Empires</clr-dg-column>
+        <clr-dg-column [clrDgField]="'rebel.name'">Rebels</clr-dg-column>
+        <clr-dg-column [clrDgField]="'empire.name'">Empires</clr-dg-column>
 
-        <clr-dg-row *clrDgItems="let number of list">
+        <clr-dg-row *clrDgItems="let soldier of soldiers">
             <clr-dg-cell>
-                <a *ngIf="number < rebels.length"
-                    routerLink="/soldier/{{rebels[number].id}}">{{rebels[number].name}}</a>
+                <a *ngIf="soldier.rebel; else blanck"
+                    routerLink="/soldier/{{soldier.rebel.id}}">{{soldier.rebel.name}}</a>
+                <ng-template #blanck>-</ng-template>
             </clr-dg-cell>
             <clr-dg-cell>
-                <a *ngIf="number < empires.length"
-                    routerLink="/soldier/{{empires[number].id}}">{{empires[number].name}}</a>
+                <a *ngIf="soldier.empire; else blanck"
+                    routerLink="/soldier/{{soldier.empire.id}}">{{soldier.empire.name}}</a>
+                <ng-template #blanck>-</ng-template>
             </clr-dg-cell>
         </clr-dg-row>
 
         <clr-dg-footer>
-            <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="list.length">
+            <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="soldiers.length">
                 <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Rows per page</clr-dg-page-size>
                 {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
                 of {{pagination.totalItems}} rows
@@ -25,6 +27,6 @@
     </clr-datagrid>
 </div>
 
-<ng-container *ngIf="!empires && !rebels">
+<ng-template #notFound>
     Couldn't find soldiers.
-</ng-container>
+</ng-template>

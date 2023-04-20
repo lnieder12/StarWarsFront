@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { Soldier } from '../soldier';
 import { SoldiersService } from '../soldiers.service';
+import { Rebel_Empire } from '../rebel-empire';
 
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -16,10 +17,8 @@ import { ClrDatagridStateInterface } from '@clr/angular';
 })
 export class SoldiersComponent {
 
-  @Input() rebels?: Soldier[];
-  @Input() empires?: Soldier[];
+  @Input() soldiers: Rebel_Empire[] = [];
 
-  @Input() list: number[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -32,14 +31,18 @@ export class SoldiersComponent {
       rebels: this.soldierService.getRebels(id),
       empires: this.soldierService.getEmpires(id)
     }).subscribe(results => {
-      this.rebels = results.rebels;
-      this.empires = results.empires
-      of(this.rebels.length, this.empires.length)
+
+      of(results.rebels.length, results.empires.length)
         .pipe(max())
         .subscribe(x => {
-          this.list.length = x;
-          this.list.fill(1, 0)
-          this.list = this.list.map((v, i) => v = i);
+          for(let i = 0; i < x; i++) {
+            var reb_emp = {} as Rebel_Empire;
+            if(i < results.rebels.length)
+              reb_emp.rebel = results.rebels[i];
+            if(i < results.empires.length)
+              reb_emp.empire = results.empires[i];
+            this.soldiers.push(reb_emp);
+          }
         });
     });
 

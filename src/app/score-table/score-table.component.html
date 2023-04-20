@@ -1,7 +1,10 @@
 <div *ngIf="scores">
     <clr-datagrid>
-        <clr-dg-column>Soldier</clr-dg-column>
-        <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">Score</clr-dg-column>
+        <clr-dg-column [clrDgField]="'soldier.name'">Soldier</clr-dg-column>
+        <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">
+            Score
+            <clr-dg-numeric-filter [clrDgNumericFilter]="scoreFilter"></clr-dg-numeric-filter>
+        </clr-dg-column>
 
         <clr-dg-row *clrDgItems="let score of scores">
             <clr-dg-cell>

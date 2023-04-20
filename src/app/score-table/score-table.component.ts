@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
 
 import { Score } from '../scores';
-import { Soldier } from '../soldier';
 import { SoldiersService } from '../soldiers.service';
 import { GameService } from '../game.service';
 import { ActivatedRoute } from '@angular/router';
-import { ClrDatagridComparatorInterface, ClrDatagridSortOrder } from '@clr/angular';
+import { ClrDatagridSortOrder } from '@clr/angular';
+import { ScoreFilter } from '../scoreFilter';
 
-  
 @Component({
   selector: 'app-score-table',
   templateUrl: './score-table.component.html',
@@ -17,6 +16,8 @@ export class ScoreTableComponent {
 
   @Input() scores: Score[] = [];
   descSort = ClrDatagridSortOrder.DESC;
+
+  scoreFilter =  new ScoreFilter;
 
   constructor(
     private route: ActivatedRoute,

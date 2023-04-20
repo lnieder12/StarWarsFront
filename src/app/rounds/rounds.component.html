@@ -1,11 +1,44 @@
-<ol class="list">
-    <ng-container *ngFor="let round of rounds">
-        <li>
-            <a routerLink="/round/{{round.id}}">Round</a>
-        </li>
-    </ng-container>
-</ol>
+<div *ngIf="rounds && rounds.length > 0; else notFound">
+    <clr-datagrid>
+        <clr-dg-column>Attacker</clr-dg-column>
+        <clr-dg-column>Defender</clr-dg-column>
+        <clr-dg-column>Damage</clr-dg-column>
+        <clr-dg-column>Alive</clr-dg-column>
 
-<ng-container *ngIf="!rounds">
+        <clr-dg-row *clrDgItems="let round of rounds">
+            <clr-dg-cell>
+                <a *ngIf="round.attacker;else elseAtt"
+                    routerLink="/soldier/{{round.attacker.id}}">{{round.attacker.name}}</a>
+                <ng-template #elseAtt>-</ng-template>
+            </clr-dg-cell>
+            <clr-dg-cell>
+                <a *ngIf="round.defender;else elseDef"
+                    routerLink="/soldier/{{round.defender.id}}">{{round.defender.name}}</a>
+                    <ng-template #elseDef>-</ng-template>
+            </clr-dg-cell>
+            <clr-dg-cell>
+                <span>{{round.damage}}</span>
+            </clr-dg-cell>
+            <clr-dg-cell>
+                <span style="color: Red" *ngIf="round.isDead; else elseBlock">&cross;</span>
+                <ng-template #elseBlock>
+                    <span style="color: Green">&check;</span>
+                </ng-template>
+            </clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>
+            <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="rounds.length">
+                <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Rows per page</clr-dg-page-size>
+                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                of {{pagination.totalItems}} rows
+            </clr-dg-pagination>
+        </clr-dg-footer>
+
+
+    </clr-datagrid>
+</div>
+
+<ng-template #notFound>
     Couldn't find rounds.
-</ng-container>
+</ng-template>

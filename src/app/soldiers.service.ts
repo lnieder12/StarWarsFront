@@ -34,5 +34,10 @@ export class SoldiersService {
     return this.http.get<Soldier[]>(url);
   }
 
+  getRandomValidate(id: number): Observable<Soldier> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/${this._soldierUrl}/random`;
+    return this.http.get<Soldier>(url);
+  }
+
 
 }

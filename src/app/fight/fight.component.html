@@ -1,4 +1,4 @@
-<div *ngIf="round">
+<div *ngIf="round && show; else wait">
     <h3>Round #{{nbRound}}</h3>
 
     <p>
@@ -15,4 +15,7 @@
     </p>
 
     <button (click)="nextFight()">Next</button>
+    <button (click)="skip()">Skip</button>
 </div>
+
+<ng-template #wait>Please wait ...</ng-template>
