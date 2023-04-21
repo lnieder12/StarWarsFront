@@ -30,11 +30,11 @@ export class ScoreTableComponent {
     this.soldierService.getSoldiers(id)
       .subscribe(soldiers => {
         soldiers.map(sld => {
-          this.gameService.getSoldierDamage(id, sld.id)
+          this.gameService.getSoldierScore(id, sld.id)
             .subscribe(nb => {
               var score = {} as Score;
               score.soldier = sld;
-              score.score = (Number(nb) + sld.health) * 10;
+              score.score = (Number(nb));
               // this.soldiers.set(sld, (Number(nb) + sld.health) * 10);
               this.scores.push(score);
             });

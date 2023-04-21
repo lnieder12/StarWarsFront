@@ -20,6 +20,8 @@ export class FormComponent {
 
   @Input() nbRound?: number;
 
+  @Input() games?: Game[];
+
   constructor(
     private router: Router,
     private gameService: GameService
@@ -35,8 +37,16 @@ export class FormComponent {
     }
   }
 
-  ngOnDestroy(): void {
-    NbRounds.nb = this.nbRound;
+  getGames() {
+    this.gameService.getAll()
+      .subscribe(games => {
+        this.games = games;
+        console.log(this.games);
+      });
+  }
+
+  ngOnInit(): void {
+    this.getGames();
   }
 
 }

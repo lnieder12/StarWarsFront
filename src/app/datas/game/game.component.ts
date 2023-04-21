@@ -16,18 +16,23 @@ export class GameComponent {
 
   @Input() game?: Game;
 
-  @Input() nbRounds?: number = 0;
+  @Input() nbRounds: number = 0;
 
   @Input() nbRebels?: number = 0;
 
   @Input() nbEmpires?: number;
 
+  @Input() winner?: string;
 
   @Input() round?: Round;
 
   @Input() show: boolean = false;
 
+  @Input() moreFights: boolean = true;
+
   id: number = 0;
+
+  @Input() nbFights = 0;
 
 
   constructor(
@@ -39,22 +44,24 @@ export class GameComponent {
 
   getNbRound(): void {
     this.gameService.getNbRounds(this.id)
-      .subscribe(nb => this.nbRounds = nb);
+      .subscribe(nb => {
+        this.nbRounds = nb;
+        this.gameEnded();
+      });
   }
 
-  showFight(): void {
-    var bool = false;
-    if (this.game?.maxRound && this.nbRounds)
-      bool = this.game.maxRound <= this.nbRounds;
-    if (!bool) {
+  nextFight(): void {
+    if (!this.atMaxRound()) {
       this.show = false;
       this.gameService.getFight(this.id)
         .subscribe(rnd => {
-          if (rnd == null)
+          if (rnd == null) {
             this.show = false;
+            this.moreFights = false;
+          }
           else {
             this.round = rnd;
-            if(this.nbRounds)
+            if (this.nbRounds)
               this.nbRounds++;
             else
               this.getNbRound();
@@ -63,25 +70,31 @@ export class GameComponent {
         });
     }
     else {
-      this.round = undefined;
+      this.moreFights = false;
       this.show = false;
     }
   }
 
   skip(): void {
-    this.show = false;
-    var bool = false;
-    if (this.game?.maxRound && this.nbRounds)
-      bool = this.game.maxRound <= this.nbRounds;
-    if (!bool) {
-      this.gameService.doAllFight(this.id)
+    if (!this.atMaxRound()) {
+      this.show = false;
+      var nbFights;
+      if (this.game?.maxRound) {
+        if (this.nbFights < this.game.maxRound - this.nbRounds)
+          nbFights = this.game.maxRound - this.nbRounds;
+        else
+          nbFights = this.nbFights;
+      }
+      else
+        nbFights = this.nbFights;
+      this.gameService.doMultipleFights(this.id, nbFights)
         .subscribe(() => {
           this.getNbRound();
-          this.round = undefined;
+          this.moreFights = false;
         });
     }
     else {
-      this.round = undefined;
+      this.moreFights = false;
       this.show = false;
     }
   }
@@ -107,10 +120,43 @@ export class GameComponent {
     this.router.navigateByUrl(`game/${this.game?.id}/scores`);
   }
 
+  atMaxRound(): boolean {
+    var bool = false;
+    if (this.game?.maxRound) {
+      if (this.nbRounds >= this.game.maxRound)
+        bool = true;
+    }
+    return bool;
+  }
+
+  gameEnded(): void {
+    if (this.atMaxRound()) {
+      this.show = false;
+      this.moreFights = false;
+      this.setWinner();
+    }
+    else {
+      this.gameService.enoughSoldiers(this.id)
+        .subscribe(bool => {
+          this.show = bool;
+          this.moreFights = bool;
+          if(!bool)
+            this.setWinner();
+        });
+    }
+  }
+
+  setWinner(): void {
+    this.gameService.getWinnerTeam(this.id)
+      .subscribe(team => {
+        if (team !== "")
+          this.winner = team;
+      });
+  }
+
   ngOnInit(): void {
     this.getId();
     this.getGame();
-    this.show = true;
   }
 
 }

@@ -15,7 +15,6 @@ import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RoundsComponent } from './lists/rounds/rounds.component';
 import { ScoreTableComponent } from './lists/score-table/score-table.component';
-import { GamesComponent } from './lists/games/games.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { GamesComponent } from './lists/games/games.component'
     GameComponent,
     RoundsComponent,
     ScoreTableComponent,
-    GamesComponent    
   ],
   imports: [
     BrowserModule,

@@ -11,3 +11,18 @@
         </form>
     </div>
 </div>
+
+<div *ngIf="games">
+    <clr-datagrid>
+
+        <clr-dg-column>Game</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let game of games">
+            <clr-dg-cell>
+                <a routerLink="/game/{{game.id}}">Game #{{game.id}}</a>
+            </clr-dg-cell>
+        </clr-dg-row>
+
+    </clr-datagrid>
+
+</div>
