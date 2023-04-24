@@ -1,0 +1,12 @@
+.apptitle {
+    padding: 2px;
+    padding-top: 10px;
+}
+
+.apptitle a {
+    margin-left: 10px;
+    text-align: left;
+    font-size: 38px;
+    text-decoration: none;
+    color: black;
+}

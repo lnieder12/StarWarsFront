@@ -1,4 +1,4 @@
-<div *ngIf="scores">
+<div *ngIf="scores; else wait">
     <clr-datagrid>
         <clr-dg-column [clrDgField]="'soldier.name'">Soldier</clr-dg-column>
         <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">
@@ -28,3 +28,7 @@
 
 
 </div>
+
+<ng-template #wait>
+    Please Wait...
+</ng-template>

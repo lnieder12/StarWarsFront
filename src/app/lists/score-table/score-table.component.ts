@@ -12,37 +12,26 @@ import { ScoreFilter } from '../../scoreFilter';
   templateUrl: './score-table.component.html',
   styleUrls: ['./score-table.component.css']
 })
-export class ScoreTableComponent {  
+export class ScoreTableComponent {
 
-  @Input() scores: Score[] = [];
+  @Input() scores?: Score[];
   descSort = ClrDatagridSortOrder.DESC;
 
-  scoreFilter =  new ScoreFilter;
+  scoreFilter = new ScoreFilter;
 
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
-    private soldierService: SoldiersService
   ) { }
 
   getAll(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.soldierService.getSoldiers(id)
-      .subscribe(soldiers => {
-        soldiers.map(sld => {
-          this.gameService.getSoldierScore(id, sld.id)
-            .subscribe(nb => {
-              var score = {} as Score;
-              score.soldier = sld;
-              score.score = (Number(nb));
-              // this.soldiers.set(sld, (Number(nb) + sld.health) * 10);
-              this.scores.push(score);
-            });
-
-        });
-      });
-
+    const id = Number(this.route.parent?.snapshot.paramMap.get('id'));
+    if (id) {
+      this.gameService.getScores(id)
+        .subscribe(score => this.scores = score);
+    }
   }
+
 
   ngOnInit(): void {
     this.getAll();

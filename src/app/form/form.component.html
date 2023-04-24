@@ -1,28 +1,61 @@
-<div>
-    <h2>Create new Game.</h2>
-    <div>
-        <form (submit)="createGame()">
-            <p>
-                <input type="number" [(ngModel)]="soldiers" placeholder="rebels" name="soldiers">
-                <input type="number" [(ngModel)]="empires" placeholder="empires" name="empires">
-            </p>
-            <input type="number" [(ngModel)]="nbRound" placeholder="rounds" name="nbRounds">
-            <input type="submit" value="Create">
-        </form>
+<div class="line">
+    <!-- <ul class="horizontal">
+        <li>
+            <a>Salut</a>
+        </li>
+        <li>
+            <a>Salut</a>
+        </li>
+        <li>
+            <a routerLink="/game/1">Salut</a>
+        </li>
+        <li>
+            <a>Salut</a>
+        </li>
+    </ul> -->
+</div>
+
+<h2 class="title">Create new Game.</h2>
+
+<div *ngIf="show; else wait" class="float-container">
+    <div class="float-child">
+        <div class="border" style="height: 100%">
+            <form clrform [formGroup]="form" (submit)="createGame()" style="margin-left: 8px;">
+                <clr-input-container>
+                    <label>Number of Rebels</label>
+                    <input clrInput formControlName="inputRebel" />
+                    <clr-control-error *clrIfError="'required'">This field is required</clr-control-error>
+                    <clr-control-error *clrIfError="'!pattern'">Only numbers are allowed</clr-control-error>
+                </clr-input-container>
+                <clr-input-container>
+                    <label>Number of Empires</label>
+                    <input clrInput formControlName="inputEmpire" />
+                    <clr-control-error *clrIfError="'required'">This field is required</clr-control-error>
+                    <clr-control-error *clrIfError="'!pattern'">Only numbers are allowed</clr-control-error>
+                </clr-input-container>
+                <clr-input-container>
+                    <label>Maximum amount of rounds (optional)</label>
+                    <input clrInput formControlName="inputNbRounds" />
+                    <clr-control-helper>Leave empty for no rounds limitations</clr-control-helper>
+                    <clr-control-error *clrIfError="'!pattern'">Only numbers are allowed.</clr-control-error>
+                </clr-input-container>
+                <input type="submit" [disabled]="!form.dirty || form.invalid" value="Submit" />
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="games" class="float-child">
+        <div class="border" style="height: 100%">
+            <ul class="vertical height: 100%">
+                <cdk-virtual-scroll-viewport itemSize="50" style="height: 100%">
+                    <ng-container *cdkVirtualFor="let game of games">
+                        <li>
+                            <a routerLink="/game/{{game.id}}/fight">Game #{{game.id}}</a>
+                        </li>
+                    </ng-container>
+                </cdk-virtual-scroll-viewport>
+            </ul>
+        </div>
     </div>
 </div>
-
-<div *ngIf="games">
-    <clr-datagrid>
-
-        <clr-dg-column>Game</clr-dg-column>
-
-        <clr-dg-row *clrDgItems="let game of games">
-            <clr-dg-cell>
-                <a routerLink="/game/{{game.id}}">Game #{{game.id}}</a>
-            </clr-dg-cell>
-        </clr-dg-row>
-
-    </clr-datagrid>
-
-</div>
+<ng-template #wait>Please wait...</ng-template>

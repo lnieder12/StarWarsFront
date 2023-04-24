@@ -1,0 +1,29 @@
+<div>
+    <ul class="horizontal">
+        <ng-container *ngIf="game">
+            <li>
+                <a routerLink="./fight">Fight</a>
+            </li>
+            <li>
+                <a routerLink="./soldiers">Soldiers</a>
+            </li>
+            <li>
+                <a routerLink="./rounds">Rounds</a>
+            </li>
+            <li>
+                <a routerLink="./scores">Scores</a>
+            </li>
+        </ng-container>
+    </ul>
+</div>
+
+<div *ngIf="game">
+    <h2 class="title">Game #{{game.id}}</h2>
+    <router-outlet />
+</div>
+<ng-container *ngIf="!game">
+    <p>Couldn't find this game.</p>
+</ng-container>
+<ng-container *ngIf="error">
+    <p>Redirecting ...</p>
+</ng-container>

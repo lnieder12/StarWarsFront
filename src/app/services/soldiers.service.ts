@@ -34,9 +34,14 @@ export class SoldiersService {
     return this.http.get<Soldier[]>(url);
   }
 
-  getRandomValidate(id: number): Observable<Soldier> {
-    const url = `${this._apiUrl + this._gameUrl}/${id}/${this._soldierUrl}/random`;
-    return this.http.get<Soldier>(url);
+  getNbValideRebels(id: number): Observable<number> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/rebel/valide`;
+    return this.http.get<number>(url);
+  }
+
+  getNbValideEmpires(id: number): Observable<number> {
+    const url = `${this._apiUrl + this._gameUrl}/${id}/empire/valide`;
+    return this.http.get<number>(url);
   }
 
 

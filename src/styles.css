@@ -1,1 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
+
+ul.vertical {
+    /* background-color: blue; */
+    height: 100%;
+    min-width: 250px;
+    /* margin-right: 10rem; */
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+ul.vertical li {
+    font-size: 25;
+    text-align: center;
+    
+    font-size: 25px;
+}
+
+ul.vertical li a {
+    display: block;
+    padding: 5px;
+    margin: 2px;
+}
+
+li a:hover {
+    background-color: beige;
+}
+
+li a {
+    color:darkblue;
+    text-decoration: none;
+    text-align: center;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+div.border{
+    border: 4px rgb(140, 140, 140) solid;
+    border-radius: 15px;
+    padding: 1px;
+}
+
+div.float-container {
+    height: 350px;
+    min-width: 100px;
+    /* border: red 5px solid; */
+    padding: none;
+}
+
+div.float-child {
+    height: 100%;
+    width: 50%;
+    min-width: 400px;
+    float: left;
+    padding: 15px;
+}
+
+.title {
+    margin-top: 15px;
+    padding-left: 15px;
+    color: black;
+}

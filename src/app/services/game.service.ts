@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Game } from '../interfaces/game';
 import { Round } from '../interfaces/round';
+import { Score } from '../interfaces/scores';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class GameService {
   constructor(private http: HttpClient) { }
 
   createGame(rebels: number, empires: number, nbRound: number): Observable<Game> {
-    const options = { params: new HttpParams().set('nbRound', nbRound) };
+    const options = nbRound ? { params: new HttpParams().set('nbRound', nbRound) } : {};
     const url = `${this._apiUrl}/${rebels}/${empires}`;
     return this.http.post<Game>(url, {}, options);
   }
@@ -35,13 +36,13 @@ export class GameService {
     return this.http.get<Round[]>(url);
   }
 
-  getFight(id: number): Observable<Round> {
+  doFight(id: number): Observable<Round> {
     const url = `${this._apiUrl}/${id}/fight`;
     return this.http.get<Round>(url);
   }
 
   doMultipleFights(id: number, nbFights: number): Observable<boolean> {
-    const options = nbFights ? { params: new HttpParams().set('nb', nbFights) } : {};
+    const options = Number(nbFights) ? { params: new HttpParams().set('nb', nbFights) } : {};
     const url = `${this._apiUrl}/${id}/multipleFight`;
     return this.http.get<boolean>(url, options);
   }
@@ -56,14 +57,9 @@ export class GameService {
     return this.http.get<number>(url);
   }
 
-  getNbValideRebels(id: number): Observable<number> {
-    const url = `${this._apiUrl}/${id}/rebel/valide`;
-    return this.http.get<number>(url);
-  }
-
-  getNbValideEmpires(id: number): Observable<number> {
-    const url = `${this._apiUrl}/${id}/empire/valide`;
-    return this.http.get<number>(url);
+  getScores(id: number): Observable<Score[]> {
+    const url = `${this._apiUrl}/${id}/score`;
+    return this.http.get<Score[]>(url);
   }
 
   enoughSoldiers(id: number): Observable<boolean> {
@@ -71,7 +67,7 @@ export class GameService {
     return this.http.get<boolean>(url);
   }
 
-  getWinnerTeam(id: number) {
+  getWinningTeam(id: number) {
     const url = `${this._apiUrl}/${id}/winnerTeam`;
     return this.http.get(url, {responseType: 'text'});
   }

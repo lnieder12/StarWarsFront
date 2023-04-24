@@ -1,4 +1,4 @@
-import { Soldier } from "./interfaces/soldier";
+import { Soldier } from "./soldier";
 
 export interface Rebel_Empire {
     rebel: Soldier;

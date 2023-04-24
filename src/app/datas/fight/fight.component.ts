@@ -5,14 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../../services/game.service';
 import { SoldiersService } from '../../services/soldiers.service';
 import { Round } from 'src/app/interfaces/round';
-import { NbRounds } from 'src/app/nbRounds';
 
 @Component({
   selector: 'app-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css']
+  templateUrl: './fight.component.html',
+  styleUrls: ['./fight.component.css', '../../../styles.css']
 })
-export class GameComponent {
+export class FightComponent {
 
   @Input() game?: Game;
 
@@ -53,7 +52,7 @@ export class GameComponent {
   nextFight(): void {
     if (!this.atMaxRound()) {
       this.show = false;
-      this.gameService.getFight(this.id)
+      this.gameService.doFight(this.id)
         .subscribe(rnd => {
           if (rnd == null) {
             this.show = false;
@@ -101,19 +100,21 @@ export class GameComponent {
 
 
   getGame(): void {
-    this.gameService.getGame(this.id)
-      .subscribe(game => {
-        this.game = game;
-        this.getNbRound();
-        this.soldierService.getEmpires(this.id)
-          .subscribe(empires => this.nbEmpires = empires.length);
-        this.soldierService.getRebels(this.id)
-          .subscribe(rebels => this.nbRebels = rebels.length);
-      });
+    if (this.id) {
+      this.gameService.getGame(this.id)
+        .subscribe(game => {
+          this.game = game;
+          this.getNbRound();
+          this.soldierService.getNbValideEmpires(this.id)
+            .subscribe(empires => this.nbEmpires = empires);
+          this.soldierService.getNbValideRebels(this.id)
+            .subscribe(rebels => this.nbRebels = rebels);
+        });
+    }
   }
 
   getId(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.id = Number(this.route.parent?.snapshot.paramMap.get('id'));
   }
 
   goToScore(): void {
@@ -140,14 +141,14 @@ export class GameComponent {
         .subscribe(bool => {
           this.show = bool;
           this.moreFights = bool;
-          if(!bool)
+          if (!bool)
             this.setWinner();
         });
     }
   }
 
   setWinner(): void {
-    this.gameService.getWinnerTeam(this.id)
+    this.gameService.getWinningTeam(this.id)
       .subscribe(team => {
         if (team !== "")
           this.winner = team;

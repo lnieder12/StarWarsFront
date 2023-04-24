@@ -1,0 +1,25 @@
+
+ul.horizontal {
+    background-color: rgb(246, 246, 246);
+    border-bottom:rgb(216, 216, 216) 2px solid;
+    border-top: rgb(216, 216, 216) 2px solid;
+    min-height: 52px;
+}
+
+ul.horizontal li {
+    float: left;
+}
+
+ul.horizontal li a {
+    color: black;
+    display: inline-block;
+    padding: 0.9em 1.1em;
+}
+
+ul.horizontal li a:hover {
+    background-color: rgb(216, 216, 216);
+}
+
+div.fight {
+    padding-left: 15px;
+}

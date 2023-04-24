@@ -5,16 +5,19 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SoldiersComponent } from './lists/soldiers/soldiers.component';
 import { DetailComponent } from './datas/detail/detail.component';
 import { RoundDetailComponent } from './datas/round-detail/round-detail.component';
-import { GameComponent } from './datas/game/game.component';
+import { FightComponent } from './datas/fight/fight.component';
 
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RoundsComponent } from './lists/rounds/rounds.component';
 import { ScoreTableComponent } from './lists/score-table/score-table.component';
+
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { GameOutletComponent } from './game-outlet/game-outlet.component';
 
 @NgModule({
   declarations: [
@@ -23,17 +26,20 @@ import { ScoreTableComponent } from './lists/score-table/score-table.component';
     SoldiersComponent,
     DetailComponent,
     RoundDetailComponent,
-    GameComponent,
+    FightComponent,
     RoundsComponent,
     ScoreTableComponent,
+    GameOutletComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     ClarityModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
