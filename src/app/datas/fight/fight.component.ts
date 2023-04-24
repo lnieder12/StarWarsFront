@@ -57,6 +57,7 @@ export class FightComponent {
           if (rnd == null) {
             this.show = false;
             this.moreFights = false;
+            this.gameEnded();
           }
           else {
             this.round = rnd;
@@ -71,6 +72,7 @@ export class FightComponent {
     else {
       this.moreFights = false;
       this.show = false;
+      this.gameEnded();
     }
   }
 
@@ -95,6 +97,7 @@ export class FightComponent {
     else {
       this.moreFights = false;
       this.show = false;
+      this.gameEnded();
     }
   }
 

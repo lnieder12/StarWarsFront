@@ -1,7 +1,7 @@
 <div *ngIf="soldiers; else notFound">
     <clr-datagrid>
-        <clr-dg-column [clrDgField]="'rebel.name'">Rebels</clr-dg-column>
-        <clr-dg-column [clrDgField]="'empire.name'">Empires</clr-dg-column>
+        <clr-dg-column [clrDgField]="'rebel.name'" [clrDgSortBy]="soldierComparator">Rebels</clr-dg-column>
+        <clr-dg-column [clrDgField]="'empire.name'" [clrDgSortBy]="soldierComparator"  >Empires</clr-dg-column>
 
         <clr-dg-row *clrDgItems="let soldier of soldiers">
             <clr-dg-cell>

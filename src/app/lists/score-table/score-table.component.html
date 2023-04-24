@@ -1,6 +1,6 @@
 <div *ngIf="scores; else wait">
     <clr-datagrid>
-        <clr-dg-column [clrDgField]="'soldier.name'">Soldier</clr-dg-column>
+        <clr-dg-column [clrDgField]="'soldier.name'" [clrDgSortBy]="nameComparator">Soldier</clr-dg-column>
         <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">
             Score
             <clr-dg-numeric-filter [clrDgNumericFilter]="scoreFilter"></clr-dg-numeric-filter>

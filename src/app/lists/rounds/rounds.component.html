@@ -1,11 +1,20 @@
 <div *ngIf="rounds && rounds.length > 0; else notFound">
-    <clr-datagrid>
-        <clr-dg-column>Attacker</clr-dg-column>
-        <clr-dg-column>Defender</clr-dg-column>
-        <clr-dg-column>Damage</clr-dg-column>
-        <clr-dg-column>Alive</clr-dg-column>
 
-        <clr-dg-row *clrDgItems="let round of rounds">
+    <div style="margin-left: 15px;">
+        <button class="btn btn-secondary" (click)="clearSort()">Chronological order</button>
+        <button class="btn btn-secondary" (click)="clearFilter()">Clear filter</button>
+    </div>
+
+    <clr-datagrid>
+        <clr-dg-column [clrDgField]="'attacker.name'" [clrDgSortBy]="attackerComparator">Attacker</clr-dg-column>
+        <clr-dg-column [clrDgField]="'defender.name'" [clrDgSortBy]="defenderComparator">Defender</clr-dg-column>
+        <clr-dg-column [clrDgField]="'damage'" >
+            Damage
+            <clr-dg-numeric-filter [clrDgNumericFilter]="damageFilter"/>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'isDead'" >Alive</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let round of rounds;">
             <clr-dg-cell>
                 <a *ngIf="round.attacker;else elseAtt"
                     routerLink="/soldier/{{round.attacker.id}}">{{round.attacker.name}}</a>

@@ -5,7 +5,7 @@ import { SoldiersService } from '../../services/soldiers.service';
 import { GameService } from '../../services/game.service';
 import { ActivatedRoute } from '@angular/router';
 import { ClrDatagridSortOrder } from '@clr/angular';
-import { ScoreFilter } from '../../scoreFilter';
+import { ScoreFilter, SoldierNameComparator } from '../../scoreFilter';
 
 @Component({
   selector: 'app-score-table',
@@ -18,6 +18,8 @@ export class ScoreTableComponent {
   descSort = ClrDatagridSortOrder.DESC;
 
   scoreFilter = new ScoreFilter;
+
+  nameComparator = new SoldierNameComparator();
 
   constructor(
     private route: ActivatedRoute,

@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, QueryList, ViewChildren } from '@angular/core';
 
 import { Round } from '../../interfaces/round';
 import { ActivatedRoute } from '@angular/router';
 import { RoundService } from 'src/app/services/round.service';
+import { ClrDatagridColumn, ClrDatagridSortOrder } from '@clr/angular';
+import { AttackerComparator, DamageFilter, DefenderComparator } from 'src/app/roundFilter';
 
 
 @Component({
@@ -13,6 +15,14 @@ import { RoundService } from 'src/app/services/round.service';
 export class RoundsComponent {
 
   @Input() rounds?: Round[];
+
+  defenderComparator = new DefenderComparator();
+
+  attackerComparator = new AttackerComparator();
+
+  damageFilter = new DamageFilter();
+
+  @ViewChildren(ClrDatagridColumn) columns?: QueryList<ClrDatagridColumn>;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +36,18 @@ export class RoundsComponent {
         .subscribe(rounds => this.rounds = rounds);
 
     }
+  }
+
+  clearSort(): void {
+    this.columns?.forEach(col => {
+      col.sortOrder = ClrDatagridSortOrder.UNSORTED;
+    });
+  }
+
+  clearFilter(): void {
+    this.columns?.forEach(col => {
+      col.filterValue = "";
+    })
   }
 
   ngOnInit():void {

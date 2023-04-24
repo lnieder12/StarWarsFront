@@ -3,11 +3,17 @@
 
 
         <ng-container *ngIf="winner; else remaining">
-            <h3>{{winner}}</h3>
+            <h3>
+                {{winner}}
+                <ng-container *ngIf="nbRounds">
+                    on round #{{nbRounds}}
+                </ng-container>
+                .
+            </h3>
         </ng-container>
 
         <ng-template #remaining>
-            <ng-container *ngIf="nbRebels && nbEmpires">
+            <ng-container *ngIf="nbRebels && nbEmpires && show">
                 <h3>{{nbRebels}} rebels fights {{nbEmpires}} empires.</h3>
             </ng-container>
         </ng-template>
@@ -42,7 +48,7 @@
         <ng-template #wait3>Fights are done.</ng-template>
         <div>
             <p>
-                <button [disabled]="!show" (click)="nextFight()">Next</button>
+                <button [disabled]="!show" (click)="nextFight()">Fight</button>
             </p>
             <p>
                 <ng-container *ngIf="nbFights > 0; else doAll">Fights for {{nbFights}} rounds</ng-container>

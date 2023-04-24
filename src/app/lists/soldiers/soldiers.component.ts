@@ -6,6 +6,7 @@ import { Rebel_Empire } from '../../interfaces/rebel-empire';
 
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, max, of } from 'rxjs';
+import { SoldierNameComparator } from 'src/app/soldierFilter';
 
 @Component({
   selector: 'app-soldiers',
@@ -16,6 +17,7 @@ export class SoldiersComponent {
 
   @Input() soldiers: Rebel_Empire[] = [];
 
+  soldierComparator = new SoldierNameComparator();
 
   constructor(
     private route: ActivatedRoute,
