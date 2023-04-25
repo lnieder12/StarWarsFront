@@ -8,7 +8,6 @@ import { FormComponent } from './form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SoldiersComponent } from './lists/soldiers/soldiers.component';
 import { DetailComponent } from './datas/detail/detail.component';
-import { RoundDetailComponent } from './datas/round-detail/round-detail.component';
 import { FightComponent } from './datas/fight/fight.component';
 
 import { ClarityModule } from '@clr/angular';
@@ -25,7 +24,6 @@ import { GameOutletComponent } from './game-outlet/game-outlet.component';
     FormComponent,
     SoldiersComponent,
     DetailComponent,
-    RoundDetailComponent,
     FightComponent,
     RoundsComponent,
     ScoreTableComponent,
