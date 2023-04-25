@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { Game } from '../interfaces/game';
 import { Round } from '../interfaces/round';
@@ -11,8 +11,8 @@ import { Score } from '../interfaces/scores';
 })
 export class GameService {
 
+  public roundSubject = new Subject<Round[]>();
   private _apiUrl = 'https://localhost:7038/game'
-
   constructor(private http: HttpClient) { }
 
   createGame(rebels: number, empires: number, nbRound: number): Observable<Game> {
@@ -41,10 +41,10 @@ export class GameService {
     return this.http.get<Round>(url);
   }
 
-  doMultipleFights(id: number, nbFights: number): Observable<boolean> {
+  doMultipleFights(id: number, nbFights: number): Observable<Round[]> {
     const options = Number(nbFights) ? { params: new HttpParams().set('nb', nbFights) } : {};
     const url = `${this._apiUrl}/${id}/multipleFight`;
-    return this.http.get<boolean>(url, options);
+    return this.http.get<Round[]>(url, options);
   }
 
   getSoldierScore(id: number, idSoldier: number): Observable<number> {

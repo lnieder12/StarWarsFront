@@ -15,3 +15,80 @@ ul.horizontal li a {
     display: inline-block;
     padding: 0.9em 1.1em;
 }
+
+div.notif-container {
+    position: absolute;
+    right: 10px;
+    height: 500px;
+    width: 300px;
+    z-index: 1000;
+    background-color: white;
+}
+
+div.notif-container button {
+    width: 100%;
+    margin: 0;
+    margin-top: 5px;
+    padding: 0;
+}
+
+ul.vertical li {
+    /* background-color: lightgreen; */
+    font-size: 8px;
+    
+
+}
+
+.float-right:hover {
+    cursor: pointer;
+}
+
+ul.vertical li div {
+    height: 105px;
+    position: relative;
+    text-align: left;
+    margin: 5px;
+    padding: 3px;
+    border-radius: 15px;
+    border: 2px solid;
+}
+
+.green-div {
+    background-color: rgb(223, 240, 208);
+    border: rgb(48, 107, 0);
+}
+
+.green-div:hover {
+    background-color: rgb(223, 240, 208, 0.5);
+}
+
+.red-div {
+    background-color: rgb(254, 221, 215);
+    border-color: rgb(153, 23, 0);
+}
+
+.red-div:hover {
+    background-color: rgb(254, 221, 215, 0.5);
+}
+
+ul.vertical li div:hover {
+    cursor: pointer;
+}
+
+ul.vertical li div p {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+ul.vertical li div cds-icon {
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    /* display: none; */
+}
+
+ul.vertical li div:hover + ul.vertical li div cds-icon {
+    color: red;
+}
+

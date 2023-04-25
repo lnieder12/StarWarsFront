@@ -13,13 +13,44 @@
             <li>
                 <a routerLink="./scores">Scores</a>
             </li>
+            <li class="float-right" style="float: right;">
+                <a (click)="openNotifs()">
+                    <ng-container *ngIf="newNotif; else noNotif">
+                        <cds-icon shape="bell" badge="info" />
+                    </ng-container>
+                    <ng-template #noNotif>
+                        <cds-icon shape="bell" />
+                    </ng-template>
+                </a>
+            </li>
         </ng-container>
     </ul>
 </div>
 
-<div *ngIf="game">
+
+
+
+<div *ngIf="game" style="position: relative;">
+    <div *ngIf="showNotif" class="notif-container border">
+        <ul class="vertical">
+            <cdk-virtual-scroll-viewport itemSize="105" style="height: 92%">
+                <ng-container *cdkVirtualFor="let round of rounds; let i=index">
+                    <li>
+                        <div (mouseenter)="enter(i)" (mouseleave)="leave()" [ngClass]="round.isDead ? 'red-div' : 'green-div'" (click)="removeNotif(round)">
+                            <p>Attacker : {{round.attacker.name}}</p>
+                            <p>Defender : {{round.defender.name}}</p>
+                            <p>Damage : {{round.damage}}</p>
+                            <p>Hp left : {{round.defender.health}}</p>
+                            <cds-icon *ngIf="this.onIndex === i" shape="times" />
+                        </div>
+                    </li>
+                </ng-container>
+            </cdk-virtual-scroll-viewport>
+            <button class="btn" (click)="removeAllNotif()">Remove all notifs</button>
+        </ul>
+    </div>
     <h2 class="title">Game #{{game.id}}</h2>
-    <router-outlet />
+    <router-outlet></router-outlet>
 </div>
 <ng-container *ngIf="!game">
     <p>Couldn't find this game.</p>

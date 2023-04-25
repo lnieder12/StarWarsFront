@@ -18,6 +18,8 @@ import { ScoreTableComponent } from './lists/score-table/score-table.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { GameOutletComponent } from './game-outlet/game-outlet.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,

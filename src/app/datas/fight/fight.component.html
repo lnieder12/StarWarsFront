@@ -8,7 +8,6 @@
                 <ng-container *ngIf="nbRounds">
                     on round #{{nbRounds}}
                 </ng-container>
-                .
             </h3>
         </ng-container>
 
@@ -57,22 +56,13 @@
                 </ng-template>
             </p>
             <form (submit)="skip()">
-                <input [disabled]="!show" type="number" [(ngModel)]="nbFights" name="nbFights" class="clr-input"/>
+                <input [disabled]="!show" type="number" [(ngModel)]="nbFights" name="nbFights" class="clr-input" />
                 <button type="submit" [disabled]="!show" class="btn">Skip</button>
             </form>
-            
+
         </div>
-
     </div>
-
-
-
-    <!-- 
-<div *ngIf="game">
-    <h2 class="title">Game #{{game.id}}</h2>
-    <router-outlet name="game-outlet"/>
-</div> 
-<ng-container *ngIf="!game">
-    Couldn't find this game.
-</ng-container>
--->
+    <div class="battlefield">
+        <span></span>
+    </div>
+</div>

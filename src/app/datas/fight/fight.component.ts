@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, } from '@angular/core';
 
 import { Game } from '../../interfaces/game';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { SoldiersService } from '../../services/soldiers.service';
 import { Round } from 'src/app/interfaces/round';
 
 @Component({
-  selector: 'app-game',
+  selector: 'app-fight',
   templateUrl: './fight.component.html',
   styleUrls: ['./fight.component.css', '../../../styles.css']
 })
@@ -33,13 +33,16 @@ export class FightComponent {
 
   @Input() nbFights = 0;
 
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private gameService: GameService,
     private soldierService: SoldiersService
   ) { }
+
+  sendRound(rounds: Round[]): void {
+    this.gameService.roundSubject.next(rounds);
+  }
 
   getNbRound(): void {
     this.gameService.getNbRounds(this.id)
@@ -60,6 +63,7 @@ export class FightComponent {
             this.gameEnded();
           }
           else {
+            this.sendRound([rnd]);
             this.round = rnd;
             if(rnd.isDead)
               this.getValidateSoldiers();
@@ -88,7 +92,8 @@ export class FightComponent {
       }
 
       this.gameService.doMultipleFights(this.id, nbFights)
-        .subscribe(() => {
+        .subscribe(rounds => {
+          this.sendRound(rounds);
           this.getNbRound();
           this.moreFights = false;
           this.getValidateSoldiers();

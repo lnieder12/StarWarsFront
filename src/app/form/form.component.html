@@ -31,8 +31,8 @@
 
     <div *ngIf="games" class="float-child">
         <div class="border" style="height: 100%">
-            <ul class="vertical height: 100%">
-                <cdk-virtual-scroll-viewport itemSize="50" style="height: 100%">
+            <ul class="vertical">
+                <cdk-virtual-scroll-viewport itemSize="34" style="height: 100%">
                     <ng-container *cdkVirtualFor="let game of games">
                         <li>
                             <a routerLink="/game/{{game.id}}/fight">Game #{{game.id}}</a>
