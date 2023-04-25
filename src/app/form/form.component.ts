@@ -30,7 +30,9 @@ export class FormComponent {
 
   public game?: Game;
 
-  @Input() show: boolean = true;
+  show: boolean = true;
+
+  error: boolean = false;
 
   games?: Game[];
 
@@ -47,14 +49,16 @@ export class FormComponent {
       .subscribe(game => {
         this.game = game;
         this.router.navigateByUrl(`/game/${game.id}/fight`);
-      });
+      },
+      error => this.error = true);
   }
 
   getGames() {
     this.gameService.getAll()
       .subscribe(games => {
         this.games = games;
-      });
+      },
+      error => this.error = true);
   }
 
   ngOnInit(): void {

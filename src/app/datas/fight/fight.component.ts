@@ -61,6 +61,8 @@ export class FightComponent {
           }
           else {
             this.round = rnd;
+            if(rnd.isDead)
+              this.getValidateSoldiers();
             if (this.nbRounds)
               this.nbRounds++;
             else
@@ -79,19 +81,17 @@ export class FightComponent {
   skip(): void {
     if (!this.atMaxRound()) {
       this.show = false;
-      var nbFights;
+      var nbFights = this.nbFights;
       if (this.game?.maxRound) {
         if (this.nbFights < this.game.maxRound - this.nbRounds)
           nbFights = this.game.maxRound - this.nbRounds;
-        else
-          nbFights = this.nbFights;
       }
-      else
-        nbFights = this.nbFights;
+
       this.gameService.doMultipleFights(this.id, nbFights)
         .subscribe(() => {
           this.getNbRound();
           this.moreFights = false;
+          this.getValidateSoldiers();
         });
     }
     else {
@@ -108,12 +108,16 @@ export class FightComponent {
         .subscribe(game => {
           this.game = game;
           this.getNbRound();
-          this.soldierService.getNbValideEmpires(this.id)
-            .subscribe(empires => this.nbEmpires = empires);
-          this.soldierService.getNbValideRebels(this.id)
-            .subscribe(rebels => this.nbRebels = rebels);
+          this.getValidateSoldiers();
         });
     }
+  }
+
+  getValidateSoldiers(): void {
+    this.soldierService.getNbValideEmpires(this.id)
+      .subscribe(empires => this.nbEmpires = empires);
+    this.soldierService.getNbValideRebels(this.id)
+      .subscribe(rebels => this.nbRebels = rebels);
   }
 
   getId(): void {

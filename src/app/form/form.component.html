@@ -21,7 +21,7 @@
                 <clr-input-container>
                     <label>Maximum amount of rounds (optional)</label>
                     <input clrInput formControlName="inputNbRounds" />
-                    <clr-control-helper>Leave empty for no rounds limitations</clr-control-helper>
+                    <clr-control-helper>Leave empty for no rounds limitation</clr-control-helper>
                     <clr-control-error *clrIfError="'!pattern'">Only numbers are allowed.</clr-control-error>
                 </clr-input-container>
                 <input type="submit" [disabled]="!form.dirty || form.invalid" value="Submit" class="btn"/>
@@ -43,4 +43,7 @@
         </div>
     </div>
 </div>
+
+<ng-container *ngIf="error">Couldn't connect to API.</ng-container>
+
 <ng-template #wait>Please wait...</ng-template>
