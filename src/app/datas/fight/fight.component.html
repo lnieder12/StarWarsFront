@@ -48,7 +48,7 @@
         <ng-template #wait3>Fights are done.</ng-template>
         <div>
             <p>
-                <button [disabled]="!show" (click)="nextFight()">Fight</button>
+                <button [disabled]="!show" (click)="nextFight()" class="btn">Fight</button>
             </p>
             <p>
                 <ng-container *ngIf="nbFights > 0; else doAll">Fights for {{nbFights}} rounds</ng-container>
@@ -57,8 +57,8 @@
                 </ng-template>
             </p>
             <form (submit)="skip()">
-                <input [disabled]="!show" type="number" [(ngModel)]="nbFights" name="nbFights" />
-                <button type="submit" [disabled]="!show">Skip</button>
+                <input [disabled]="!show" type="number" [(ngModel)]="nbFights" name="nbFights" class="clr-input"/>
+                <button type="submit" [disabled]="!show" class="btn">Skip</button>
             </form>
             
         </div>

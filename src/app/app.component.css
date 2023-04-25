@@ -1,12 +1,16 @@
 .apptitle {
-    padding: 2px;
+    padding-bottom: 4px;
     padding-top: 10px;
 }
 
 .apptitle a {
-    margin-left: 10px;
+    padding-left: 10px;
     text-align: left;
     font-size: 38px;
     text-decoration: none;
     color: black;
 }
+
+/* .apptitle a:hover {
+    background-color: rgb(240, 240, 240);
+} */
