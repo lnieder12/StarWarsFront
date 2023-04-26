@@ -8,7 +8,7 @@ import { ClrDatagridSortOrder } from '@clr/angular';
 import { ScoreFilter, SoldierNameComparator } from '../../scoreFilter';
 
 @Component({
-  selector: 'app-score-table',
+  selector: 'app-scores',
   templateUrl: './score-table.component.html',
   styleUrls: ['./score-table.component.css']
 })
@@ -27,7 +27,7 @@ export class ScoreTableComponent {
   ) { }
 
   getAll(): void {
-    const id = Number(this.route.parent?.snapshot.paramMap.get('id'));
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.gameService.getScores(id)
         .subscribe(score => this.scores = score);

@@ -24,6 +24,8 @@ export class GameOutletComponent {
 
   onIndex: any = null;
 
+  numTab: number = 1;
+
   constructor(
     private gameService: GameService,
     private route: ActivatedRoute,
@@ -77,6 +79,10 @@ export class GameOutletComponent {
 
   redirect(): void {
     this.router.navigateByUrl("");
+  }
+
+  setTab(nb: number): void {
+    this.numTab = nb;
   }
 
   ngOnInit(): void {

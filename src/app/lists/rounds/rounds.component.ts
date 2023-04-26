@@ -32,7 +32,7 @@ export class RoundsComponent {
   ) {}
 
   getRounds(): void {
-    const id = Number(this.route.parent?.snapshot.paramMap.get('id'));
+    const id = Number(this.route.snapshot.paramMap.get('id'));
     if(id) {
       this.roundService.getRounds(id)
         .subscribe(rounds => this.rounds = rounds);

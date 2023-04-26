@@ -27,36 +27,24 @@
     </ul>
 </div> -->
 <div class="nav-bar-container">
-    <div class="nav-bar-left" >
+    <div class="nav-bar-left">
         <clr-tabs style="min-width: 25%;">
             <clr-tab>
-                <button clrTabLink>Fight</button>
-                <clr-tab-content *clrIfActive>
-                    Le Combat
-                </clr-tab-content>
+                <button clrTabLink (click)="setTab(1)">Fight</button>
             </clr-tab>
             <clr-tab>
-                <button clrTabLink>Soldiers</button>
-                <clr-tab-content *clrIfActive>
-                    Les soldats
-                </clr-tab-content>
+                <button clrTabLink (click)="setTab(2)">Soldiers</button>
             </clr-tab>
             <clr-tab>
-                <button clrTabLink>Rounds</button>
-                <clr-tab-content *clrIfActive>
-                    Les rounds
-                </clr-tab-content>
+                <button clrTabLink (click)="setTab(3)">Rounds</button>
             </clr-tab>
             <clr-tab>
-                <button clrTabLink>Scores</button>
-                <clr-tab-content *clrIfActive>
-                    Les scores
-                </clr-tab-content>
+                <button clrTabLink (click)="setTab(4)">Scores</button>
             </clr-tab>
         </clr-tabs>
-    
+
     </div>
-    
+
     <div class="nav-bar-middle">
         <ul class="nav"></ul>
     </div>
@@ -74,13 +62,13 @@
                 </button>
             </li>
         </ul>
-    
+
     </div>
 
 </div>
 
 
-<div *ngIf="game" style="position: relative;">  
+<div *ngIf="game" style="position: relative;">
     <div *ngIf="showNotif" class="notif-container border">
         <ul class="vertical">
             <cdk-virtual-scroll-viewport itemSize="105" style="height: 92%">
@@ -101,7 +89,10 @@
         </ul>
     </div>
     <h2 class="title">Game #{{game.id}}</h2>
-    <router-outlet></router-outlet>
+    <ng-container *ngIf="numTab == 1"><app-fight /></ng-container>
+    <ng-container *ngIf="numTab == 2"><app-soldiers /></ng-container>
+    <ng-container *ngIf="numTab == 3"><app-rounds /></ng-container>
+    <ng-container *ngIf="numTab == 4"><app-scores /></ng-container>
 </div>
 <ng-container *ngIf="!game">
     <p>Couldn't find this game.</p>

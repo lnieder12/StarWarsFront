@@ -126,7 +126,8 @@ export class FightComponent {
   }
 
   getId(): void {
-    this.id = Number(this.route.parent?.snapshot.paramMap.get('id'));
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    console.log(this.id);
   }
 
   goToScore(): void {
@@ -168,6 +169,7 @@ export class FightComponent {
   }
 
   ngOnInit(): void {
+    console.log("salut");
     this.getId();
     this.getGame();
   }
