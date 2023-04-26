@@ -4,7 +4,7 @@ import { Round } from '../../interfaces/round';
 import { ActivatedRoute } from '@angular/router';
 import { RoundService } from 'src/app/services/round.service';
 import { ClrDatagridColumn, ClrDatagridSortOrder } from '@clr/angular';
-import { AttackerComparator, DamageFilter, DefenderComparator } from 'src/app/roundFilter';
+import { AttackerComparator, DamageFilter, DefenderComparator, HpLeftFilter } from 'src/app/roundFilter';
 
 
 @Component({
@@ -21,6 +21,8 @@ export class RoundsComponent {
   attackerComparator = new AttackerComparator();
 
   damageFilter = new DamageFilter();
+
+  hpLeftFilter = new HpLeftFilter();
 
   @ViewChildren(ClrDatagridColumn) columns?: QueryList<ClrDatagridColumn>;
 
@@ -46,7 +48,9 @@ export class RoundsComponent {
 
   clearFilter(): void {
     this.columns?.forEach(col => {
-      col.filterValue = "";
+      col.filterValue = null;
+      if(col.field == "damage") {}
+        // col.setFilter(this.damageFilter);
     })
   }
 

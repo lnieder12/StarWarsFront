@@ -92,3 +92,23 @@ ul.vertical li div:hover + ul.vertical li div cds-icon {
     color: red;
 }
 
+div.nav-bar-container {
+    width: 100%;
+    min-width: none;
+    height: 70px;
+}
+
+div.nav-bar-left {
+    float: left;
+}
+
+div.nav-bar-right {
+    float: right;
+}
+
+div.nav-bar-middle {
+    width: 100%;
+    position: absolute;
+    z-index: -1000;
+    overflow: hidden;
+}

@@ -18,7 +18,7 @@ export class GameOutletComponent {
 
   error: boolean = false;
 
-  showNotif: boolean = true;
+  showNotif: boolean = false;
 
   newNotif: boolean = false;
 

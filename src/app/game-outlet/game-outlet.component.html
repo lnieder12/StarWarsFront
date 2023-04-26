@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <ul class="horizontal">
         <ng-container *ngIf="game">
             <li>
@@ -25,22 +25,73 @@
             </li>
         </ng-container>
     </ul>
+</div> -->
+<div class="nav-bar-container">
+    <div class="nav-bar-left" >
+        <clr-tabs style="min-width: 25%;">
+            <clr-tab>
+                <button clrTabLink>Fight</button>
+                <clr-tab-content *clrIfActive>
+                    Le Combat
+                </clr-tab-content>
+            </clr-tab>
+            <clr-tab>
+                <button clrTabLink>Soldiers</button>
+                <clr-tab-content *clrIfActive>
+                    Les soldats
+                </clr-tab-content>
+            </clr-tab>
+            <clr-tab>
+                <button clrTabLink>Rounds</button>
+                <clr-tab-content *clrIfActive>
+                    Les rounds
+                </clr-tab-content>
+            </clr-tab>
+            <clr-tab>
+                <button clrTabLink>Scores</button>
+                <clr-tab-content *clrIfActive>
+                    Les scores
+                </clr-tab-content>
+            </clr-tab>
+        </clr-tabs>
+    
+    </div>
+    
+    <div class="nav-bar-middle">
+        <ul class="nav"></ul>
+    </div>
+
+    <div class="nav-bar-right">
+        <ul class="nav">
+            <li class="nav-item" style="margin-right: 0;">
+                <button class="btn btn-link nav-link" style="width: 40px;" (click)="openNotifs()">
+                    <ng-container *ngIf="newNotif; else noNotif">
+                        <cds-icon shape="bell" badge="info" />
+                    </ng-container>
+                    <ng-template #noNotif>
+                        <cds-icon shape="bell" />
+                    </ng-template>
+                </button>
+            </li>
+        </ul>
+    
+    </div>
+
 </div>
 
 
-
-
-<div *ngIf="game" style="position: relative;">
+<div *ngIf="game" style="position: relative;">  
     <div *ngIf="showNotif" class="notif-container border">
         <ul class="vertical">
             <cdk-virtual-scroll-viewport itemSize="105" style="height: 92%">
                 <ng-container *cdkVirtualFor="let round of rounds; let i=index">
                     <li>
-                        <div (mouseenter)="enter(i)" (mouseleave)="leave()" [ngClass]="round.isDead ? 'red-div' : 'green-div'" (click)="removeNotif(round)">
+                        <div (mouseenter)="enter(i)" (mouseleave)="leave()"
+                            [ngClass]="round.isDead ? 'red-div' : 'green-div'" (click)="removeNotif(round)">
                             <p>Attacker : {{round.attacker.name}}</p>
                             <p>Defender : {{round.defender.name}}</p>
                             <p>Damage : {{round.damage}}</p>
-                            <p>Hp left : {{round.defender.health}}</p>
+                            <p>Hp left : {{round.hpLeft}}</p>
                             <cds-icon *ngIf="this.onIndex === i" shape="times" />
                         </div>
                     </li>

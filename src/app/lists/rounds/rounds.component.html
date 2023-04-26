@@ -10,9 +10,12 @@
         <clr-dg-column [clrDgField]="'defender.name'" [clrDgSortBy]="defenderComparator">Defender</clr-dg-column>
         <clr-dg-column [clrDgField]="'damage'" >
             Damage
-            <clr-dg-numeric-filter [clrDgNumericFilter]="damageFilter"/>
+            <clr-dg-numeric-filter [clrDgNumericFilter]="damageFilter" />
         </clr-dg-column>
-        <clr-dg-column [clrDgField]="'isDead'" >Alive</clr-dg-column>
+        <clr-dg-column [clrDgField]="'hpLeft'" >
+            Hp left
+            <clr-dg-numeric-filter [clrDgNumericFilter]="hpLeftFilter" />
+        </clr-dg-column>
 
         <clr-dg-row *clrDgItems="let round of rounds;">
             <clr-dg-cell>
@@ -31,7 +34,7 @@
             <clr-dg-cell>
                 <span style="color: Red" *ngIf="round.isDead; else elseBlock">&cross;</span>
                 <ng-template #elseBlock>
-                    <span style="color: Green">&check;</span>
+                    <span style="color: Green">{{round.hpLeft}}</span>
                 </ng-template>
             </clr-dg-cell>
         </clr-dg-row>

@@ -5,5 +5,6 @@ export interface Round {
     attacker: Soldier,
     defender: Soldier,
     damage: number,
-    isDead: boolean
+    isDead: boolean,
+    hpLeft: number
 }
