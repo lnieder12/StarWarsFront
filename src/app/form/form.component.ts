@@ -48,7 +48,7 @@ export class FormComponent {
     this.gameService.createGame(Number(this.form.controls.inputRebel.value), Number(this.form.controls.inputEmpire.value), Number(this.form.controls.inputNbRounds.value))
       .subscribe(game => {
         this.game = game;
-        this.router.navigateByUrl(`/game/${game.id}/fight`);
+        this.router.navigateByUrl(`/game/${game.id}`);
       },
       error => this.error = true);
   }

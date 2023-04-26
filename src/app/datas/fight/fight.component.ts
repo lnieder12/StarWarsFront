@@ -1,10 +1,11 @@
-import { Component, Input, } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, } from '@angular/core';
 
 import { Game } from '../../interfaces/game';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../../services/game.service';
 import { SoldiersService } from '../../services/soldiers.service';
 import { Round } from 'src/app/interfaces/round';
+import { BattlefieldComponent } from '../battlefield/battlefield.component';
 
 @Component({
   selector: 'app-fight',
@@ -32,6 +33,8 @@ export class FightComponent {
   id: number = 0;
 
   @Input() nbFights = 0;
+
+  @ViewChild(BattlefieldComponent) battlefield!: BattlefieldComponent;
 
   constructor(
     private router: Router,
@@ -63,6 +66,7 @@ export class FightComponent {
             this.gameEnded();
           }
           else {
+            this.battlefield.singleFight(rnd);
             this.sendRound([rnd]);
             this.round = rnd;
             if(rnd.isDead)
@@ -127,7 +131,6 @@ export class FightComponent {
 
   getId(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-    console.log(this.id);
   }
 
   goToScore(): void {
@@ -168,8 +171,9 @@ export class FightComponent {
       });
   }
 
+
+
   ngOnInit(): void {
-    console.log("salut");
     this.getId();
     this.getGame();
   }

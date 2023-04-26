@@ -17,6 +17,7 @@ import { ScoreTableComponent } from './lists/score-table/score-table.component';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { GameOutletComponent } from './game-outlet/game-outlet.component';
+import { BattlefieldComponent } from './datas/battlefield/battlefield.component';
 
 
 
@@ -30,6 +31,7 @@ import { GameOutletComponent } from './game-outlet/game-outlet.component';
     RoundsComponent,
     ScoreTableComponent,
     GameOutletComponent,
+    BattlefieldComponent,
   ],
   imports: [
     BrowserModule,
