@@ -1,4 +1,6 @@
-<div class="line"></div>
+<div class="line">
+    <ul class="nav"></ul>
+</div>
 
 <h2 class="title">Create new Game.</h2>
 
@@ -35,7 +37,7 @@
                 <cdk-virtual-scroll-viewport itemSize="34" style="height: 100%">
                     <ng-container *cdkVirtualFor="let game of games">
                         <li>
-                            <a routerLink="/game/{{game.id}}/fight">Game #{{game.id}}</a>
+                            <a routerLink="/game/{{game.id}}">Game #{{game.id}}</a>
                         </li>
                     </ng-container>
                 </cdk-virtual-scroll-viewport>
