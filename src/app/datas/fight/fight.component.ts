@@ -45,7 +45,7 @@ export class FightComponent {
   ) { }
 
   sendRound(rounds: Round[]): void {
-    this.gameService.roundSubject.next(rounds);
+    this.gameService.roundSubject.next(rounds.reverse());
   }
 
   getNbRound(): void {
@@ -95,7 +95,7 @@ export class FightComponent {
         if (this.nbFights < this.game.maxRound - this.nbRounds)
           nbFights = this.game.maxRound - this.nbRounds;
       }
-      this.battlefield.startMultipleFights(nbFights);
+      this.battlefield.startMultipleFights(nbFights? nbFights : 20);
       this.gameService.doMultipleFights(this.id, nbFights)
         .subscribe(rounds => {
           this.sendRound(rounds);

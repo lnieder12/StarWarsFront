@@ -36,7 +36,7 @@ export class GameOutletComponent {
     this.gameService.roundSubject.subscribe(rounds => {
       if(!this.showNotif)
         this.newNotif = true;
-      this.rounds = [...this.rounds, ...rounds];
+      this.rounds = [...rounds, ...this.rounds];
     });
   }
 

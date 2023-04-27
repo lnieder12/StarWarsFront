@@ -12,34 +12,18 @@
         </ng-container>
 
         <ng-template #remaining>
-            <ng-container *ngIf="nbRebels && nbEmpires && show">
+            <ng-container *ngIf="nbRebels && nbEmpires">
                 <h3>{{nbRebels}} rebels fights {{nbEmpires}} empires.</h3>
             </ng-container>
         </ng-template>
 
-        <div *ngIf="round && show; else wait">
+        <div *ngIf="nbRounds && !winner">
             <h3>Round #{{nbRounds}}</h3>
 
-            <p>
-                {{round.attacker.name}} attacks {{round.defender.name}} for {{round.damage}} damage.
-            </p>
-            <p>
-                <ng-container *ngIf="!round.isDead">
-                    {{round.defender.name}} has {{round.defender.health}} hp left.
-                </ng-container>
-
-                <ng-container *ngIf="round.isDead">
-                    {{round.defender.name}} died.
-                </ng-container>
-            </p>
-
-
         </div>
-        <ng-template #wait>
-            <ng-container *ngIf="show;else wait2">
-                Click for next fight.
-            </ng-container>
-        </ng-template>
+        <ng-container *ngIf="show;else wait2">
+            Click for next fight.
+        </ng-container>
 
         <ng-template #wait2>
             <ng-container *ngIf="moreFights; else wait3">Please wait...</ng-container>
@@ -52,7 +36,7 @@
             <p>
                 <ng-container *ngIf="nbFights > 0; else doAll">Fights for {{nbFights}} rounds</ng-container>
                 <ng-template #doAll>
-                    <ng-container *ngIf="show">Do all remaining fights</ng-container>
+                    <ng-container>Do all remaining fights</ng-container>
                 </ng-template>
             </p>
             <form (submit)="skip()">
