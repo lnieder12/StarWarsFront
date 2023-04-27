@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild, } from '@angular/core';
+import { Component, Input, ViewChild, } from '@angular/core';
 
 import { Game } from '../../interfaces/game';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { GameService } from '../../services/game.service';
 import { SoldiersService } from '../../services/soldiers.service';
 import { Round } from 'src/app/interfaces/round';
 import { BattlefieldComponent } from '../battlefield/battlefield.component';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-fight',
@@ -69,7 +70,7 @@ export class FightComponent {
             this.battlefield.singleFight(rnd);
             this.sendRound([rnd]);
             this.round = rnd;
-            if(rnd.isDead)
+            if (rnd.isDead)
               this.getValidateSoldiers();
             if (this.nbRounds)
               this.nbRounds++;
@@ -94,13 +95,14 @@ export class FightComponent {
         if (this.nbFights < this.game.maxRound - this.nbRounds)
           nbFights = this.game.maxRound - this.nbRounds;
       }
-
+      this.battlefield.startMultipleFights(nbFights);
       this.gameService.doMultipleFights(this.id, nbFights)
         .subscribe(rounds => {
           this.sendRound(rounds);
           this.getNbRound();
           this.moreFights = false;
           this.getValidateSoldiers();
+          this.battlefield.stopMultipleFights();
         });
     }
     else {
@@ -131,10 +133,6 @@ export class FightComponent {
 
   getId(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-  }
-
-  goToScore(): void {
-    this.router.navigateByUrl(`game/${this.game?.id}/scores`);
   }
 
   atMaxRound(): boolean {

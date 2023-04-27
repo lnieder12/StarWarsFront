@@ -27,14 +27,28 @@ export class BattlefieldComponent {
 
   lines: Line[] = [];
 
+  damage?: { coords: Coords, damage: number, nb: number };
+
+  round?: Round;
+
+  clockAnimate: number = 0;
+
+  keepFighting: boolean = false;
 
   drawLine(line: Line): void {
+    if (this.clockAnimate % 3 == 0)
+      line.width--;
     this.ctx.beginPath();
     this.ctx.strokeStyle = line.color;
-    this.ctx.lineWidth = 2;
+    this.ctx.lineWidth = line.width;
     this.ctx.moveTo(line.x0, line.y0);
     this.ctx.lineTo(line.x1, line.y1);
     this.ctx.stroke();
+    if (line.width == 0) {
+      const index = this.lines.indexOf(line);
+      if (index > -1)
+        this.lines.splice(index, 1);
+    }
   }
 
   drawCircle(coords: Coords, color: string): void {
@@ -47,7 +61,24 @@ export class BattlefieldComponent {
     this.ctx.stroke();
   }
 
+  redrawAll(): void {
+    this.ctx.clearRect(0, 0, this.battlefied.width, this.battlefied.height);
+    this.drawSoldiers();
+    this.drawLines();
+    this.drawDamage();
+  }
+
   drawSoldiers(): void {
+    if (this.round) {
+      if (this.round.attacker.name.includes("REB")) {
+        this.nameOverSoldier(this.rebels[0], this.round.attacker.name);
+        this.nameOverSoldier(this.empires[0], this.round.defender.name);
+      }
+      else {
+        this.nameOverSoldier(this.rebels[0], this.round.defender.name);
+        this.nameOverSoldier(this.empires[0], this.round.attacker.name);
+      }
+    }
     this.rebels.forEach(rb => this.drawCircle(rb, "blue"));
     this.empires.forEach(emp => this.drawCircle(emp, "red"));
   }
@@ -56,10 +87,16 @@ export class BattlefieldComponent {
     this.lines.forEach(line => this.drawLine(line));
   }
 
+  drawDamage(): void {
+    if (this.damage)
+      this.damageOverSoldier(this.damage.coords, this.damage.damage)
+  }
+
   nameOverSoldier(sld: Coords, name: string): void {
     this.ctx.beginPath();
     this.ctx.textAlign = "center";
     this.ctx.fillStyle = "black";
+    this.ctx.font = "10px Arial";
     this.ctx.fillText(name, sld.x, sld.y - 15);
   }
 
@@ -72,7 +109,10 @@ export class BattlefieldComponent {
       sd = { x, y };
 
       bool = true;
-      this.rebels.forEach(rb => bool = this.farEnough(sd, rb));
+      this.rebels.forEach(rb => {
+        if (bool)
+          bool = this.farEnough(sd, rb)
+      });
     }
     this.rebels.push(sd);
     return sd;
@@ -87,41 +127,69 @@ export class BattlefieldComponent {
       sd = { x, y };
 
       bool = true;
-      this.empires.forEach(emp => bool = this.farEnough(sd, emp));
+      this.empires.forEach(emp => {
+        if (bool)
+          bool = this.farEnough(sd, emp)
+      });
     }
     this.empires.push(sd);
     return sd;
   }
 
   farEnough(one: Coords, two: Coords): boolean {
-    var dist = Math.sqrt(Math.pow(two.x - one.x, 2) - Math.pow(two.y - one.y, 2));
-    return dist >= 30;
+    var pow = Math.pow(two.x - one.x, 2) - Math.pow(two.y - one.y, 2);
+    var dist = Math.floor(Math.sqrt(Math.abs(pow)));
+    return dist >= 20;
   }
 
   rebelShoot(reb: Coords, emp: Coords): void {
-    this.soldierShoot(emp, reb, "blue");
+    this.soldierShoot(emp, reb, "blue", 0);
   }
 
   empireShoot(emp: Coords, reb: Coords): void {
-    this.soldierShoot(emp, reb, "red");
+    this.soldierShoot(emp, reb, "red", 0);
   }
 
-  soldierShoot(a: Coords, b: Coords, color: string): void {
+
+  soldierShoot(a: Coords, b: Coords, color: string, damage: number): void {
     var line = {} as Line;
     line.x0 = a.x;
     line.y0 = a.y;
     line.x1 = b.x;
     line.y1 = b.y;
     line.color = color;
+    line.width = 7;
     this.lines.push(line);
     this.drawLine(line);
+    if (this.round)
+      this.damageOverSoldier(b, damage);
+
+  }
+
+  damageOverSoldier(sld: Coords, damage: number): void {
+    if (!this.damage) {
+      const temp = {} as { coords: Coords, damage: number, nb: number };
+      temp.coords = sld;
+      temp.damage = damage;
+      temp.nb = 20;
+      this.damage = temp;
+    }
+    else {
+      this.damage.nb--;
+    }
+    this.ctx.beginPath();
+    this.ctx.font = "20px Arial black";
+    this.ctx.fillStyle = `rgba(0, 0, 0, ${this.damage.nb / 20})`;
+    this.ctx.fillText(damage.toString(), sld.x + 20, sld.y - (20 - this.damage.nb) * 3);
+    if (this.damage.nb == 0)
+      this.damage = undefined;
   }
 
   randomShoot(): void {
     var reb = this.rebels[this.randomNumber(0, this.rebels.length)];
     var emp = this.empires[this.randomNumber(0, this.empires.length)];
 
-    if (Math.round(Math.random())) {
+    if (this.randomNumber(0, 100) >= 50) {
       this.rebelShoot(reb, emp);
     }
     else {
@@ -136,6 +204,8 @@ export class BattlefieldComponent {
 
 
   singleFight(round: Round): void {
+    this.clockAnimate = 0;
+    this.round = round;
     this.rebels = [];
     this.empires = [];
     this.lines = [];
@@ -159,8 +229,61 @@ export class BattlefieldComponent {
 
     (async () => {
       await delay(1000);
-      this.soldierShoot(attacker, defender, color);
+      this.soldierShoot(attacker, defender, color, round.damage);
+
+      while (this.clockAnimate < 20) {
+        await delay(100);
+        this.clockAnimate++;
+        this.redrawAll();
+      }
+      this.clockAnimate = 0;
+      this.drawSoldiers();
+
+
     })();
+  }
+
+  startMultipleFights(nbFights: number): void {
+    var nb = nbFights;
+    if (nb > 20)
+      nb = 20;
+    this.keepFighting = true;
+    this.multipleFights(nb);
+  }
+
+  stopMultipleFights(): void {
+    this.keepFighting = false;
+  }
+
+  multipleFights(nb: number) {
+    this.rebels = [];
+    this.empires = [];
+    this.lines = [];
+    this.damage = undefined;
+    this.round = undefined;
+    this.ctx.clearRect(0, 0, this.battlefied.width, this.battlefied.height);
+    for (let i = 0; i < nb; i++) {
+      this.randomPlaceEmpire();
+      this.randomPlaceRebel();
+    }
+    this.drawSoldiers();
+    (async () => {
+      (async () => {
+        var endAnimation = 0;
+        while (this.keepFighting || endAnimation < 40) {
+          await delay(100);
+          if(!this.keepFighting)
+            endAnimation++;
+          this.clockAnimate++;
+          this.redrawAll();
+        }
+      })()
+      while (this.keepFighting) {
+        const rnd = this.randomNumber(500, 800);
+        await delay(rnd);
+        this.randomShoot();
+      }
+    })()
   }
 
   ngOnInit(): void {
