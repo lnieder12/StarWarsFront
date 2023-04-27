@@ -65,7 +65,7 @@ div.float-container {
 div.float-child {
     height: 100%;
     width: 50%;
-    min-width: 400px;
+    min-width: 300px;
     float: left;
     padding: 15px;
 }

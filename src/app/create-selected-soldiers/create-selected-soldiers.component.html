@@ -1,0 +1,84 @@
+<div class="float-container border">
+    <div class="float-child" style="width: 30%;">
+        <div class="border" style="height: 100%;">
+            <clr-radio-container clrInline style="margin: 5px;">
+                <clr-radio-wrapper>
+                    <input type="radio" value="all" name="options" clrRadio />
+                    <label>All</label>
+                </clr-radio-wrapper>
+                <clr-radio-wrapper>
+                    <input type="radio" value="rebels" name="options" clrRadio />
+                    <label>Rebels</label>
+                </clr-radio-wrapper>
+                <clr-radio-wrapper>
+                    <input type="radio" value="empires" name="options" clrRadio />
+                    <label>Empires</label>
+                </clr-radio-wrapper>
+            </clr-radio-container>
+            <ng-container *ngIf="soldiers">
+                <div style="height: 80%;">
+                    <ul class="vertical">
+                        <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
+                            <ng-container *cdkVirtualFor="let soldier of soldiers; let i=index">
+                                <li>
+                                    <div (click)="addToGame(soldier)" class="soldier-container" (mouseenter)="enter(i, soldier)" (mouseleave)="leave()">
+                                        <p>{{soldier.name}}</p>
+                                        <cds-icon *ngIf="this.onIndex === i" shape="angle-double" direction="right" />
+                                    </div>
+                                </li>
+                            </ng-container>
+                        </cdk-virtual-scroll-viewport>
+                    </ul>
+                </div>
+
+            </ng-container>
+        </div>
+    </div>
+    <div class="float-child" style="width: 70%;">
+        <div class="border float-container" style="height: 100%;">
+
+            <div class="float-child game-soldiers">
+                <ng-container *ngIf="soldiers">
+                    <div style="height: 100%;">
+                        <ul class="vertical">
+                            <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
+                                <ng-container *cdkVirtualFor="let soldier of gameRebels; let i=index">
+                                    <li>
+                                        <div (click)="removeRebelFromGame(soldier)" class="soldier-container" (mouseenter)="enter(i, soldier)" (mouseleave)="leave()">
+                                            <p>{{soldier.name}}</p>
+                                        </div>
+                                    </li>
+                                </ng-container>
+                            </cdk-virtual-scroll-viewport>
+                        </ul>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="float-child game-soldiers">
+                <ng-container *ngIf="soldiers">
+                    <div style="height: 100%;">
+                        <ul class="vertical">
+                            <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
+                                <ng-container *cdkVirtualFor="let soldier of gameEmpires; let i=index">
+                                    <li>
+                                        <div (click)="removeEmpireFromGame(soldier)" class="soldier-container" (mouseenter)="enter(i, soldier)" (mouseleave)="leave()">
+                                            <p>{{soldier.name}}</p>
+                                        </div>
+                                    </li>
+                                </ng-container>
+                            </cdk-virtual-scroll-viewport>
+                        </ul>
+                    </div>
+                </ng-container>
+            </div>
+
+        </div>
+    </div>
+    <div>
+        <ng-container *ngIf="soldierInfo">
+            <p>Health: {{soldierInfo.health}} Attack: {{soldierInfo.attack}} Team: {{soldierInfo.soldierType}}</p>
+
+        </ng-container>
+    </div>
+</div>

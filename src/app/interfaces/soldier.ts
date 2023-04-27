@@ -2,5 +2,6 @@ export interface Soldier {
     id: number,
     health: number,
     attack: number,
-    name: string
+    name: string,
+    soldierType: string
 }

@@ -15,6 +15,11 @@ export class SoldiersService {
 
   constructor(private http: HttpClient) { }
 
+  getAll(): Observable<Soldier[]> {
+    const url = `${this._apiUrl + this._soldierUrl}`;
+    return this.http.get<Soldier[]>(url);
+  }
+
   getSoldiers(id: number): Observable<Soldier[]> {
     const url = `${this._apiUrl + this._gameUrl}/${id}/${this._soldierUrl}`;
     return this.http.get<Soldier[]>(url);

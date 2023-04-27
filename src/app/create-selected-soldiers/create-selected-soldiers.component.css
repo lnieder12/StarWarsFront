@@ -1,0 +1,27 @@
+div.soldier-container {
+    width: 100%;
+    padding: 1px;
+    position: relative;
+    align-content: center;
+}
+
+div.soldier-container cds-icon {
+    position: absolute;
+    right: 5px;
+    top: 20%;
+}
+
+div.soldier-container:hover {
+    background-color: rgb(216, 216, 216);
+    cursor: pointer;
+}
+
+div.soldier-container p {
+    margin: 0;
+    width: 100%;
+    user-select: none;
+}
+
+.game-soldiers {
+    min-width: 100px;
+}

@@ -22,7 +22,11 @@ export class DetailComponent {
   getSoldier(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.soldierService.getSoldier(id)
-      .subscribe(soldier => this.soldier = soldier);
+      .subscribe(soldier => {
+        console.log(soldier);
+        this.soldier = soldier
+        console.log(this.soldier);
+      });
   }
 
   ngOnInit(): void {
