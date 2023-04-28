@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { Game } from '../interfaces/game';
 import { Round } from '../interfaces/round';
 import { Score } from '../interfaces/scores';
+import { Soldier } from '../interfaces/soldier';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,13 @@ export class GameService {
   public roundSubject = new Subject<Round[]>();
   private _apiUrl = 'https://localhost:7038/game'
   constructor(private http: HttpClient) { }
+
+  createSelectedSoldiersGame(rebels: Soldier[], empires: Soldier[], nbRound: number): Observable<Game> {
+    const options = nbRound ? { params: new HttpParams().set('nbRound', nbRound) } : {};
+    const url = `${this._apiUrl}/selectedSoldiers`;
+    const body = {rebels: rebels, empires: empires}
+    return this.http.post<Game>(url, body, options);
+  }
 
   createGame(rebels: number, empires: number, nbRound: number): Observable<Game> {
     const options = nbRound ? { params: new HttpParams().set('nbRound', nbRound) } : {};

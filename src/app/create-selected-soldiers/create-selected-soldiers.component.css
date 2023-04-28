@@ -21,7 +21,3 @@ div.soldier-container p {
     width: 100%;
     user-select: none;
 }
-
-.game-soldiers {
-    min-width: 100px;
-}

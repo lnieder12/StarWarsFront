@@ -1,10 +1,11 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { GameService } from '../services/game.service';
 
-import { Game } from '../interfaces/game';
 import { Router } from '@angular/router';
+import { Game } from '../interfaces/game';
 
-import { FormGroup, FormControl, Validators, NumberValueAccessor, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NumberValidator } from '../numberValidator';
 
 @Component({
   selector: 'app-form',
@@ -67,10 +68,4 @@ export class FormComponent {
 
 }
 
-export function NumberValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const numberRegExp = /^[0-9]+$/im;
-    const validNumber = control.value ? numberRegExp.test(control.value) : true;
-    return validNumber ? null : { invalidnumber: {value: control.value} };
-  }
-}
+

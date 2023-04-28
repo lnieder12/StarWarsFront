@@ -6,7 +6,7 @@
 
 <div *ngIf="show; else wait" class="float-container">
     <div class="float-child">
-        <div class="border" style="height: 100%">
+        <div class="card" style="height: 100%;margin-top: 0px;">
             <form clrform [formGroup]="form" (submit)="createGame()" style="margin-left: 8px;">
                 <clr-input-container>
                     <label>Number of Rebels</label>
@@ -32,7 +32,7 @@
     </div>
 
     <div *ngIf="games" class="float-child">
-        <div class="border" style="height: 100%">
+        <div class="card" style="height: 100%;margin-top: 0px;">
             <ul class="vertical">
                 <cdk-virtual-scroll-viewport itemSize="34" style="height: 100%">
                     <ng-container *cdkVirtualFor="let game of games">

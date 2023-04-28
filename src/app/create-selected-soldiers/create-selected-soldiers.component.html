@@ -1,84 +1,109 @@
-<div class="float-container border">
-    <div class="float-child" style="width: 30%;">
-        <div class="border" style="height: 100%;">
-            <clr-radio-container clrInline style="margin: 5px;">
-                <clr-radio-wrapper>
-                    <input type="radio" value="all" name="options" clrRadio />
-                    <label>All</label>
-                </clr-radio-wrapper>
-                <clr-radio-wrapper>
-                    <input type="radio" value="rebels" name="options" clrRadio />
-                    <label>Rebels</label>
-                </clr-radio-wrapper>
-                <clr-radio-wrapper>
-                    <input type="radio" value="empires" name="options" clrRadio />
-                    <label>Empires</label>
-                </clr-radio-wrapper>
-            </clr-radio-container>
-            <ng-container *ngIf="soldiers">
-                <div style="height: 80%;">
-                    <ul class="vertical">
-                        <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
-                            <ng-container *cdkVirtualFor="let soldier of soldiers; let i=index">
-                                <li>
-                                    <div (click)="addToGame(soldier)" class="soldier-container" (mouseenter)="enter(i, soldier)" (mouseleave)="leave()">
-                                        <p>{{soldier.name}}</p>
-                                        <cds-icon *ngIf="this.onIndex === i" shape="angle-double" direction="right" />
-                                    </div>
-                                </li>
-                            </ng-container>
-                        </cdk-virtual-scroll-viewport>
-                    </ul>
-                </div>
-
-            </ng-container>
+<div class="float-container card">
+  <div class="float-child" style="width: 30%;">
+    <div class="card" style="height: 100%;margin-top: 0px;">
+      <input style="margin-left: 5px;" (keyup)="setFilter()" type="text" [(ngModel)]="inputFilter" name="inputFiler"
+        class="clr-input">
+      <clr-radio-container clrInline style="margin: 5px;">
+        <clr-radio-wrapper>
+          <input (change)="radioFilterSoldiers('', $event)" type="radio" value="all" name="options" clrRadio />
+          <label>All</label>
+        </clr-radio-wrapper>
+        <clr-radio-wrapper>
+          <input (change)="radioFilterSoldiers('rebels', $event)" type="radio" value="rebels" name="options" clrRadio />
+          <label>Rebels</label>
+        </clr-radio-wrapper>
+        <clr-radio-wrapper>
+          <input (change)="radioFilterSoldiers('empires', $event)" type="radio" value="empires" name="options"
+            clrRadio />
+          <label>Empires</label>
+        </clr-radio-wrapper>
+      </clr-radio-container>
+      <ng-container *ngIf="soldiers">
+        <div style="height: 80%;">
+          <ul class="vertical">
+            <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
+              <ng-container *cdkVirtualFor="let soldier of filteredSoldiers; let i=index">
+                <li>
+                  <div (click)="addToGame(soldier)" class="soldier-container"
+                    (mouseenter)="enter(i, soldier, 'soldiers')" (mouseleave)="leave()">
+                    <p>{{soldier.name}}</p>
+                    <cds-icon *ngIf="this.onIndex === i && this.onScroll === 'soldiers'" shape="angle-double"
+                      direction="right" />
+                  </div>
+                </li>
+              </ng-container>
+            </cdk-virtual-scroll-viewport>
+          </ul>
         </div>
+
+      </ng-container>
     </div>
-    <div class="float-child" style="width: 70%;">
-        <div class="border float-container" style="height: 100%;">
+  </div>
+  <div class="float-child" style="width: 70%;">
+    <div class="card float-container" style="height: 100%;margin-top: 0px;">
 
-            <div class="float-child game-soldiers">
-                <ng-container *ngIf="soldiers">
-                    <div style="height: 100%;">
-                        <ul class="vertical">
-                            <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
-                                <ng-container *cdkVirtualFor="let soldier of gameRebels; let i=index">
-                                    <li>
-                                        <div (click)="removeRebelFromGame(soldier)" class="soldier-container" (mouseenter)="enter(i, soldier)" (mouseleave)="leave()">
-                                            <p>{{soldier.name}}</p>
-                                        </div>
-                                    </li>
-                                </ng-container>
-                            </cdk-virtual-scroll-viewport>
-                        </ul>
-                    </div>
-                </ng-container>
+      <form class="clr-form clr-form-horizontal" (submit)="createGame($event)">
+        <div class="clr-form-control" style="margin-top: 0px;">
+          <label style="width: 250px;" class="clr-control-label">Maximum amout of rounds (optional)</label>
+          <div class="clr-control-container">
+            <div class="clr-input-wrapper" [ngClass]="error ? 'clr-error' : ''">
+              <input (keyup)="validate($event)" class="clr-input" name="nbRound" />
             </div>
-
-            <div class="float-child game-soldiers">
-                <ng-container *ngIf="soldiers">
-                    <div style="height: 100%;">
-                        <ul class="vertical">
-                            <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
-                                <ng-container *cdkVirtualFor="let soldier of gameEmpires; let i=index">
-                                    <li>
-                                        <div (click)="removeEmpireFromGame(soldier)" class="soldier-container" (mouseenter)="enter(i, soldier)" (mouseleave)="leave()">
-                                            <p>{{soldier.name}}</p>
-                                        </div>
-                                    </li>
-                                </ng-container>
-                            </cdk-virtual-scroll-viewport>
-                        </ul>
-                    </div>
-                </ng-container>
-            </div>
-
+          </div>
+          <input [disabled]="error || gameRebels.length == 0 || gameEmpires.length == 0"
+            style="margin-left: 10px; margin-top: 0;" type="submit" value="Submit" class="btn" />
         </div>
-    </div>
-    <div>
-        <ng-container *ngIf="soldierInfo">
-            <p>Health: {{soldierInfo.health}} Attack: {{soldierInfo.attack}} Team: {{soldierInfo.soldierType}}</p>
+      </form>
 
+      <div class="float-child" style=" min-width: 100px;padding-top: 0px;">
+        <ng-container *ngIf="soldiers">
+          <div class="card" style="height: 80%;margin-top: 0px;">
+            <ul class="vertical">
+              <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
+                <ng-container *cdkVirtualFor="let soldier of gameRebels; let i=index">
+                  <li>
+                    <div (click)="removeRebelFromGame(soldier)" class="soldier-container"
+                      (mouseenter)="enter(i, soldier, 'rebels')" (mouseleave)="leave()">
+                      <p>{{soldier.name}}</p>
+                      <cds-icon *ngIf="this.onIndex === i && this.onScroll === 'rebels'" shape="times" />
+                    </div>
+                  </li>
+                </ng-container>
+              </cdk-virtual-scroll-viewport>
+            </ul>
+          </div>
         </ng-container>
+      </div>
+
+      <div class="float-child" style=" min-width: 100px;padding-top: 0px; ">
+        <ng-container *ngIf="soldiers">
+          <div class="card" style="height: 80%;margin-top: 0px;">
+            <ul class="vertical">
+              <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
+                <ng-container *cdkVirtualFor="let soldier of gameEmpires; let i=index">
+                  <li>
+                    <div (click)="removeEmpireFromGame(soldier)" class="soldier-container"
+                      (mouseenter)="enter(i, soldier, 'empires')" (mouseleave)="leave()">
+                      <p>{{soldier.name}}</p>
+                      <cds-icon *ngIf="this.onIndex === i && this.onScroll === 'empires'" shape="times" />
+                    </div>
+                  </li>
+                </ng-container>
+              </cdk-virtual-scroll-viewport>
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+
     </div>
+  </div>
+  <div>
+    <ng-container *ngIf="soldierInfo">
+      <p>Health: {{soldierInfo.health}} Attack: {{soldierInfo.attack}} Team: {{soldierInfo.soldierType}}</p>
+
+    </ng-container>
+  </div>
 </div>
+
+
+

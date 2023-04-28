@@ -95,7 +95,10 @@ export class FightComponent {
         if (this.nbFights < this.game.maxRound - this.nbRounds)
           nbFights = this.game.maxRound - this.nbRounds;
       }
-      this.battlefield.startMultipleFights(nbFights? nbFights : 20);
+      nbSoldiers = 20;
+      if (this.nbEmpires && this.nbRebels)
+        var nbSoldiers = (this.nbEmpires < this.nbRebels) ? this.nbEmpires : this.nbRebels
+      this.battlefield.startMultipleFights(nbFights ? nbFights < nbSoldiers ? nbFights : nbSoldiers : nbSoldiers);
       this.gameService.doMultipleFights(this.id, nbFights)
         .subscribe(rounds => {
           this.sendRound(rounds);
