@@ -48,11 +48,11 @@ export class CreateSelectedSoldiersComponent {
 
   createGame(a: any): void {
     const nbRound = a.target.nbRound.value;
-    console.log(nbRound);
-    this.gameService.createSelectedSoldiersGame(this.gameRebels, this.gameEmpires, Number(a.target.nbRound.value))
+    this.gameService.createSelectedSoldiersGame(this.gameRebels, this.gameEmpires, Number(nbRound))
       .subscribe(game => {
         this.router.navigateByUrl(`game/${game.id}`);
-      });
+      },
+      error => console.log(error));
   }
 
   validate(x: any) {
@@ -87,16 +87,16 @@ export class CreateSelectedSoldiersComponent {
     {
       if(args[3] === "<")
       {
-        return this.filterRadio().filter(sld => sld.health > Number(args[0]) && sld.health < Number(args[args.length-1]));
+        return this.filterRadio().filter(sld => sld.maxHealth > Number(args[0]) && sld.maxHealth < Number(args[args.length-1]));
       }
-      return this.filterRadio().filter(sld => sld.health > Number(args[0]) && sld.health > Number(args[args.length-1]));
+      return this.filterRadio().filter(sld => sld.maxHealth > Number(args[0]) && sld.maxHealth > Number(args[args.length-1]));
     }
     if(args[1] === "<")
     {
-      return this.filterRadio().filter(sld => sld.health < Number(args[args.length-1]));
+      return this.filterRadio().filter(sld => sld.maxHealth < Number(args[args.length-1]));
     }
     else
-    return this.filterRadio().filter(sld => sld.health > Number(args[args.length-1]));
+    return this.filterRadio().filter(sld => sld.maxHealth > Number(args[args.length-1]));
   }
 
   filterAttack(input: string): Soldier[] {
@@ -160,7 +160,6 @@ export class CreateSelectedSoldiersComponent {
   }
 
   removeFromSoldiers(soldier: Soldier): void {
-    console.log("remove", soldier);
     const index = this.soldiers.indexOf(soldier);
     if (index > -1)
       this.soldiers.splice(index, 1);
