@@ -49,5 +49,22 @@ export class SoldiersService {
     return this.http.get<number>(url);
   }
 
+  patchSoldierHp(id: number, newHp: number): Observable<Soldier> {
+    const patch = newHp ? [{ op: "replace", path: "/health", value: newHp }] : [];
+    const url = `${this._apiUrl + this._soldierUrl}/${id}`;
+    return this.http.patch<Soldier>(url, patch);
+  }
+
+  patchSoldierAtt(id: number, newAtt: number): Observable<Soldier> {
+    const patch = newAtt ? [{ op: "replace", path: "/attack", value: newAtt }] : [];
+    const url = `${this._apiUrl + this._soldierUrl}/${id}`;
+    return this.http.patch<Soldier>(url, patch);
+  }
+
+  patchSoldierName(id: number, newName: string): Observable<Soldier> {
+    const patch = newName ? [{ op: "replace", path: "/name", value: newName }] : [];
+    const url = `${this._apiUrl + this._soldierUrl}/${id}`;
+    return this.http.patch<Soldier>(url, patch);
+  }
 
 }

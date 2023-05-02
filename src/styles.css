@@ -22,7 +22,7 @@ ul {
 
 ul.vertical li {
     text-align: center;
-    
+
     font-size: 25px;
 }
 
@@ -74,4 +74,8 @@ div.float-child {
     margin-top: 15px;
     padding-left: 15px;
     color: black;
+}
+
+div.pad-left {
+  padding-left: 15px;
 }
