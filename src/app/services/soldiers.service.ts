@@ -50,7 +50,7 @@ export class SoldiersService {
   }
 
   patchSoldierHp(id: number, newHp: number): Observable<Soldier> {
-    const patch = newHp ? [{ op: "replace", path: "/health", value: newHp }] : [];
+    const patch = newHp ? [{ op: "replace", path: "/maxHealth", value: newHp }] : [];
     const url = `${this._apiUrl + this._soldierUrl}/${id}`;
     return this.http.patch<Soldier>(url, patch);
   }

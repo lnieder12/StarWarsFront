@@ -5,6 +5,8 @@ import { SoldiersService } from '../../services/soldiers.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { NbValidator } from 'src/app/numberValidator';
+import { ContainerIdService } from '@clr/angular/forms/common/providers/container-id.service';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-detail',
@@ -33,8 +35,9 @@ export class DetailComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private soldierService: SoldiersService
-  ) {}
+    private soldierService: SoldiersService,
+    private gameService: GameService
+  ) { }
 
   getSoldier(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -45,32 +48,41 @@ export class DetailComponent {
   }
 
   patchName(): void {
-    if(this.soldier)
+    if (this.soldier)
       this.soldierService.patchSoldierName(this.soldier.id, this.newName)
         .subscribe(sld => {
           this.soldier = sld;
           this.newName = "";
           this.editName = false;
+          if (this.gameService.contains(sld)) {
+            this.gameService.modify(sld);
+          }
         });
   }
 
   patchAttack(): void {
-    if(this.soldier)
+    if (this.soldier)
       this.soldierService.patchSoldierAtt(this.soldier.id, this.newAtt)
         .subscribe(sld => {
           this.soldier = sld;
           this.newAtt = 0;
           this.editAtt = false;
+          if (this.gameService.contains(sld)) {
+            this.gameService.modify(sld);
+          }
         });
   }
 
   patchHp(): void {
-    if(this.soldier)
+    if (this.soldier)
       this.soldierService.patchSoldierHp(this.soldier.id, this.newHp)
         .subscribe(sld => {
           this.soldier = sld;
           this.newHp = 0;
           this.editHp = false;
+          if (this.gameService.contains(sld)) {
+            this.gameService.modify(sld);
+          }
         });
   }
 

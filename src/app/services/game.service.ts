@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Game } from '../interfaces/game';
 import { Round } from '../interfaces/round';
 import { Score } from '../interfaces/scores';
-import { Soldier } from '../interfaces/soldier';
+import { Soldier, sameSoldier } from '../interfaces/soldier';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,42 @@ export class GameService {
   private _apiUrl = 'https://localhost:7038/game';
   constructor(private http: HttpClient) { }
 
+  contains(soldier: Soldier): boolean {
+    var bool: boolean = false;
+    const emps = this.empiresSubject.getValue();
+    const rebs = this.rebelsSubject.getValue();
+
+    emps.forEach(sld => {
+      if (!bool)
+        bool = sameSoldier(sld, soldier);
+    });
+    if (!bool) {
+      rebs.forEach(sld => {
+        if (!bool)
+          bool = sameSoldier(sld, soldier)
+      });
+    }
+    return bool;
+  }
+
+  modify(soldier: Soldier): void {
+    var list;
+    if (soldier.soldierType === "Rebel") {
+      list = this.rebelsSubject.getValue();
+    }
+    else {
+      list = this.empiresSubject.getValue();
+    }
+
+    list.map(sld => {
+      if(sameSoldier(sld, soldier)) {
+        sld.name = soldier.name;
+        sld.attack = soldier.attack;
+        sld.maxHealth = soldier.maxHealth;
+      }
+    });
+  }
+
   addToRebels(rebel: Soldier): void {
     var list = this.rebelsSubject.getValue();
     list.push(rebel);
@@ -30,8 +66,7 @@ export class GameService {
   removeFromRebels(rebel: Soldier): void {
     var list = this.rebelsSubject.getValue();
     const index = list.indexOf(rebel);
-    if(index > -1)
-    {
+    if (index > -1) {
       list.splice(index, 1);
       this.rebelsSubject.next(list);
     }
@@ -46,8 +81,7 @@ export class GameService {
   removeFromEmpires(empire: Soldier): void {
     var list = this.empiresSubject.getValue();
     const index = list.indexOf(empire);
-    if(index > -1)
-    {
+    if (index > -1) {
       list.splice(index, 1);
       this.empiresSubject.next(list);
     }
@@ -56,7 +90,7 @@ export class GameService {
   createSelectedSoldiersGame(rebels: Soldier[], empires: Soldier[], nbRound: number): Observable<Game> {
     const options = nbRound ? { params: new HttpParams().set('nbRound', nbRound) } : {};
     const url = `${this._apiUrl}/selectedSoldiers`;
-    const body = {rebels: rebels, empires: empires}
+    const body = { rebels: rebels, empires: empires }
     return this.http.post<Game>(url, body, options);
   }
 
@@ -114,7 +148,7 @@ export class GameService {
 
   getWinningTeam(id: number) {
     const url = `${this._apiUrl}/${id}/winnerTeam`;
-    return this.http.get(url, {responseType: 'text'});
+    return this.http.get(url, { responseType: 'text' });
   }
 
 }

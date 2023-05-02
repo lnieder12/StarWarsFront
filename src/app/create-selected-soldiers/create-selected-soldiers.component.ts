@@ -2,7 +2,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Component, HostListener, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { Soldier, equals } from '../interfaces/soldier';
+import { Soldier } from '../interfaces/soldier';
 import { NbValidator } from '../numberValidator';
 import { GameService } from '../services/game.service';
 import { SoldiersService } from '../services/soldiers.service';
@@ -89,6 +89,7 @@ export class CreateSelectedSoldiersComponent {
 
   radioFilterSoldiers(filter: string, bool: any): void {
     if (bool.target.value) {
+      this.scrollView.scrollToIndex(0);
       this.radioFilter = filter;
       this.setFilter();
 
@@ -154,17 +155,7 @@ export class CreateSelectedSoldiersComponent {
     this.soldierService.getAll()
       .subscribe(sld => {
         var list = sld.filter(sld => {
-          var bool = true;
-          emps.forEach(emp => {
-            if (bool)
-              bool = !equals(emp, sld)
-          });
-          if (bool)
-            rebs.forEach(reb => {
-              if (bool)
-                bool = !equals(reb, sld);
-            })
-          return bool;
+          return !(this.gameService.contains(sld));
         });
         this.soldiers = list;
         this.filteredSoldiers = list;

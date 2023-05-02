@@ -7,7 +7,7 @@ export interface Soldier {
     soldierType: string
 }
 
-export function equals(sld1: Soldier, sld2: Soldier)
+export function sameSoldier(sld1: Soldier, sld2: Soldier)
 {
   return sld1.id === sld2.id;
 }
