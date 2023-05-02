@@ -1,12 +1,11 @@
-import { Component, HostListener, Input, ViewChild } from '@angular/core';
-import { Soldier, equals } from '../interfaces/soldier';
-import { GameService } from '../services/game.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SoldiersService } from '../services/soldiers.service';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { NbValidator, NumberValidator } from '../numberValidator';
-import { combineLatest, forkJoin } from 'rxjs';
-import { getOrientationTuple, getShadowRootOrElse } from '@cds/core/internal';
+import { Component, HostListener, Input, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { Soldier, equals } from '../interfaces/soldier';
+import { NbValidator } from '../numberValidator';
+import { GameService } from '../services/game.service';
+import { SoldiersService } from '../services/soldiers.service';
 
 @Component({
   selector: 'app-create-selected-soldiers',
@@ -77,6 +76,8 @@ export class CreateSelectedSoldiersComponent {
     const nbRound = a.target.nbRound.value;
     this.gameService.createSelectedSoldiersGame(this.gameRebels, this.gameEmpires, Number(nbRound))
       .subscribe(game => {
+        this.gameService.empiresSubject.next([]);
+        this.gameService.rebelsSubject.next([]);
         this.router.navigateByUrl(`game/${game.id}`);
       },
         error => console.log(error));
@@ -103,7 +104,7 @@ export class CreateSelectedSoldiersComponent {
       this.filteredSoldiers = this.filterAttack(input);
     }
     else {
-      this.filteredSoldiers = this.filterRadio().filter(sld => sld.name.toLowerCase().startsWith(input));
+      this.filteredSoldiers = this.soldierFilteredRadio().filter(sld => sld.name.toLowerCase().includes(input));
     }
   }
 
@@ -111,33 +112,33 @@ export class CreateSelectedSoldiersComponent {
     const args = input.split(" ");
     if (!isNaN(Number(args[0]))) {
       if (args[3] === "<") {
-        return this.filterRadio().filter(sld => sld.maxHealth > Number(args[0]) && sld.maxHealth < Number(args[args.length - 1]));
+        return this.soldierFilteredRadio().filter(sld => sld.maxHealth > Number(args[0]) && sld.maxHealth < Number(args[args.length - 1]));
       }
-      return this.filterRadio().filter(sld => sld.maxHealth > Number(args[0]) && sld.maxHealth > Number(args[args.length - 1]));
+      return this.soldierFilteredRadio().filter(sld => sld.maxHealth > Number(args[0]) && sld.maxHealth > Number(args[args.length - 1]));
     }
     if (args[1] === "<") {
-      return this.filterRadio().filter(sld => sld.maxHealth < Number(args[args.length - 1]));
+      return this.soldierFilteredRadio().filter(sld => sld.maxHealth < Number(args[args.length - 1]));
     }
     else
-      return this.filterRadio().filter(sld => sld.maxHealth > Number(args[args.length - 1]));
+      return this.soldierFilteredRadio().filter(sld => sld.maxHealth > Number(args[args.length - 1]));
   }
 
   filterAttack(input: string): Soldier[] {
     const args = input.split(" ");
     if (!isNaN(Number(args[0]))) {
       if (args[3] === "<") {
-        return this.filterRadio().filter(sld => sld.attack > Number(args[0]) && sld.attack < Number(args[args.length - 1]));
+        return this.soldierFilteredRadio().filter(sld => sld.attack > Number(args[0]) && sld.attack < Number(args[args.length - 1]));
       }
-      return this.filterRadio().filter(sld => sld.attack > Number(args[0]) && sld.attack > Number(args[args.length - 1]));
+      return this.soldierFilteredRadio().filter(sld => sld.attack > Number(args[0]) && sld.attack > Number(args[args.length - 1]));
     }
     if (args[1] === "<") {
-      return this.filterRadio().filter(sld => sld.attack < Number(args[args.length - 1]));
+      return this.soldierFilteredRadio().filter(sld => sld.attack < Number(args[args.length - 1]));
     }
     else
-      return this.filterRadio().filter(sld => sld.attack > Number(args[args.length - 1]));
+      return this.soldierFilteredRadio().filter(sld => sld.attack > Number(args[args.length - 1]));
   }
 
-  filterRadio(): Soldier[] {
+  soldierFilteredRadio(): Soldier[] {
     switch (this.radioFilter) {
       case 'rebels':
         return this.soldiers.filter(sld => sld.soldierType === "Rebel");
@@ -149,7 +150,6 @@ export class CreateSelectedSoldiersComponent {
   }
 
   getSoldiers(emps: Soldier[], rebs: Soldier[]): void {
-    console.log(emps);
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.soldierService.getAll()
       .subscribe(sld => {
@@ -166,7 +166,6 @@ export class CreateSelectedSoldiersComponent {
             })
           return bool;
         });
-        console.log(list);
         this.soldiers = list;
         this.filteredSoldiers = list;
       });

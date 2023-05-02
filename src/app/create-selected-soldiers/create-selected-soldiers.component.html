@@ -5,7 +5,7 @@
         class="clr-input">
       <clr-radio-container clrInline style="margin: 5px;">
         <clr-radio-wrapper>
-          <input (change)="radioFilterSoldiers('', $event)" type="radio" value="all" name="options" clrRadio />
+          <input (change)="radioFilterSoldiers('', $event)" type="radio" value="all" name="options" clrRadio checked/>
           <label>All</label>
         </clr-radio-wrapper>
         <clr-radio-wrapper>
@@ -66,7 +66,7 @@
         <ng-container *ngIf="soldiers">
           <div class="card" style="height: 80%;margin-top: 0px;">
             <ul class="vertical">
-              <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
+              <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%;">
                 <ng-container *cdkVirtualFor="let soldier of gameRebels; let i=index">
                   <li>
                     <div (click)="removeFromGame(soldier)" class="soldier-container" [ngClass]="ctrlPressed ? 'ctrl-press' : ''"

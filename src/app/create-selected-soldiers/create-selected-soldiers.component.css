@@ -3,6 +3,7 @@ div.soldier-container {
     padding: 1px;
     position: relative;
     align-content: center;
+    overflow: visible;
 }
 
 div.soldier-container cds-icon {
@@ -26,8 +27,4 @@ div.soldier-container p {
   color: blue;
   text-decoration: underline;
 
-}
-
-.ctrl-press span {
-  z-index: 1000000;
 }
