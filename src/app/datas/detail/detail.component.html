@@ -27,16 +27,11 @@
 
       <ng-template #edit2>
         <form class="clr-form clr-form-horizontal" (submit)="patchHp()">
-          <div class="clr-form-control" style="margin-top: 0px;">
-            <div class="clr-input-wrapper" [ngClass]="errorHp ? 'clr-error' : ''">
-              <input (keyup)="validateHp($event)" type="text" class="clr-input" name="inputHp" [(ngModel)]="newHp" placeholder="New MaxHp">
-              <clr-control-helper>Range: 1000 - 2000</clr-control-helper>
-            </div>
+          <input (keyup)="validateHp($event)" type="text" class="clr-input" name="inputHp" [(ngModel)]="newHp"
+            placeholder="New MaxHp">
+            <clr-control-helper>Range: 1000 - 2000</clr-control-helper>
             <button [disabled]="errorHp" type="submit" class="btn">&check;</button>
             <button (click)="editHp = false;" class="btn">&cross;</button>
-
-          </div>
-
         </form>
       </ng-template>
     </div>
@@ -47,17 +42,12 @@
       </ng-container>
 
       <ng-template #edit3>
-        <form class="clr-form clr-form-horizontal" (submit)="patchAttack()">
-          <div class="clr-form-control" style="margin-top: 0px;">
-            <div class="clr-input-wrapper" [ngClass]="errorAtt ? 'clr-error' : ''">
-              <input (keyup)="validateAtt($event)" type="text" class="clr-input" name="inputAtt" [(ngModel)]="newAtt" placeholder="New Attack">
-              <clr-control-helper>Range: 100 - 500</clr-control-helper>
-            </div>
-            <button [disabled]="errorAtt" type="submit" class="btn">&check;</button>
-            <button (click)="editAtt = false;" class="btn">&cross;</button>
-
-          </div>
-
+        <form class="clr-form" (submit)="patchAttack()">
+          <input (keyup)="validateAtt($event)" type="text" class="clr-input" name="inputAtt" [(ngModel)]="newAtt"
+            placeholder="New Attack">
+          <clr-control-helper>Range: 100 - 500</clr-control-helper>
+          <button [disabled]="errorAtt" type="submit" class="btn">&check;</button>
+          <button (click)="editAtt = false;" class="btn">&cross;</button>
         </form>
       </ng-template>
 

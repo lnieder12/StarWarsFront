@@ -6,3 +6,21 @@ label, a {
 div {
   padding: 5px;
 }
+
+form {
+  display: inline;
+  padding: 0;
+  position: relative;
+}
+
+form clr-control-helper {
+  position: absolute;
+  left: 0;
+  bottom: -1rem;
+}
+
+button {
+  margin: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
