@@ -27,7 +27,7 @@
                   <div (click)="addToGame(soldier)" class="soldier-container"
                     (mouseenter)="enter(i, soldier, 'soldiers')" (mouseleave)="leave()">
                     <p>{{soldier.name}}</p>
-                    <cds-icon *ngIf="this.onIndex === i && this.onScroll === 'soldiers'" shape="angle-double"
+                    <cds-icon *ngIf="this.onIndex === i && this.overScrollView === 'soldiers'" shape="angle-double"
                       direction="right" />
                   </div>
                 </li>
@@ -65,7 +65,7 @@
                     <div (click)="removeRebelFromGame(soldier)" class="soldier-container"
                       (mouseenter)="enter(i, soldier, 'rebels')" (mouseleave)="leave()">
                       <p>{{soldier.name}}</p>
-                      <cds-icon *ngIf="this.onIndex === i && this.onScroll === 'rebels'" shape="times" />
+                      <cds-icon *ngIf="this.onIndex === i && this.overScrollView === 'rebels'" shape="times" />
                     </div>
                   </li>
                 </ng-container>
@@ -85,7 +85,7 @@
                     <div (click)="removeEmpireFromGame(soldier)" class="soldier-container"
                       (mouseenter)="enter(i, soldier, 'empires')" (mouseleave)="leave()">
                       <p>{{soldier.name}}</p>
-                      <cds-icon *ngIf="this.onIndex === i && this.onScroll === 'empires'" shape="times" />
+                      <cds-icon *ngIf="this.onIndex === i && this.overScrollView === 'empires'" shape="times" />
                     </div>
                   </li>
                 </ng-container>

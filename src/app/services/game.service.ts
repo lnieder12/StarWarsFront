@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { Game } from '../interfaces/game';
 import { Round } from '../interfaces/round';
@@ -13,8 +13,45 @@ import { Soldier } from '../interfaces/soldier';
 export class GameService {
 
   public roundSubject = new Subject<Round[]>();
-  private _apiUrl = 'https://localhost:7038/game'
+
+  public rebelsSubject = new BehaviorSubject<Soldier[]>([]);
+
+  public empiresSubject = new BehaviorSubject<Soldier[]>([]);
+
+  private _apiUrl = 'https://localhost:7038/game';
   constructor(private http: HttpClient) { }
+
+  addToRebels(rebel: Soldier): void {
+    var list = this.rebelsSubject.getValue();
+    list.push(rebel);
+    this.rebelsSubject.next(list);
+  }
+
+  removeFromRebels(rebel: Soldier): void {
+    var list = this.rebelsSubject.getValue();
+    const index = list.indexOf(rebel);
+    if(index > -1)
+    {
+      list.splice(index, 1);
+      this.rebelsSubject.next(list);
+    }
+  }
+
+  addToEmpires(empire: Soldier): void {
+    var list = this.empiresSubject.getValue();
+    list.push(empire);
+    this.empiresSubject.next(list);
+  }
+
+  removeFromEmpires(empire: Soldier): void {
+    var list = this.empiresSubject.getValue();
+    const index = list.indexOf(empire);
+    if(index > -1)
+    {
+      list.splice(index, 1);
+      this.empiresSubject.next(list);
+    }
+  }
 
   createSelectedSoldiersGame(rebels: Soldier[], empires: Soldier[], nbRound: number): Observable<Game> {
     const options = nbRound ? { params: new HttpParams().set('nbRound', nbRound) } : {};

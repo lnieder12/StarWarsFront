@@ -38,7 +38,6 @@ export class FightComponent {
   @ViewChild(BattlefieldComponent) battlefield!: BattlefieldComponent;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private gameService: GameService,
     private soldierService: SoldiersService

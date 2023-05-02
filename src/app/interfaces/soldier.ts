@@ -6,3 +6,8 @@ export interface Soldier {
     name: string,
     soldierType: string
 }
+
+export function equals(sld1: Soldier, sld2: Soldier)
+{
+  return sld1.id === sld2.id;
+}
