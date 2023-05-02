@@ -70,7 +70,7 @@ export class BattlefieldComponent {
 
   drawSoldiers(): void {
     if (this.round) {
-      if (this.round.attacker.name.includes("REB")) {
+      if (this.round.attacker.soldierType === "Rebel") {
         this.nameOverSoldier(this.rebels[0], this.round.attacker.name);
         this.nameOverSoldier(this.empires[0], this.round.defender.name);
       }
@@ -213,7 +213,7 @@ export class BattlefieldComponent {
     var attacker!: Coords;
     var defender!: Coords;
     var color: string;
-    if (round.attacker.name.includes("REB")) {
+    if (round.attacker.soldierType === "Rebel") {
       attacker = this.randomPlaceRebel();
       defender = this.randomPlaceEmpire();
       color = "blue";

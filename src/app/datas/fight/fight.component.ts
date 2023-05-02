@@ -70,8 +70,10 @@ export class FightComponent {
             this.battlefield.singleFight(rnd);
             this.sendRound([rnd]);
             this.round = rnd;
-            if (rnd.isDead)
+            if (rnd.isDead) {
               this.getNbValidateSoldiers();
+              this.gameEnded();
+            }
             if (this.nbRounds)
               this.nbRounds++;
             else
