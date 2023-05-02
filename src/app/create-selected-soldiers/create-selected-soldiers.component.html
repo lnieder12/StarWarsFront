@@ -5,7 +5,7 @@
         class="clr-input">
       <clr-radio-container clrInline style="margin: 5px;">
         <clr-radio-wrapper>
-          <input (change)="radioFilterSoldiers('', $event)" type="radio" value="all" name="options" clrRadio checked/>
+          <input (change)="radioFilterSoldiers('', $event)" type="radio" value="all" name="options" clrRadio checked />
           <label>All</label>
         </clr-radio-wrapper>
         <clr-radio-wrapper>
@@ -24,8 +24,9 @@
             <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
               <ng-container *cdkVirtualFor="let soldier of filteredSoldiers; let i=index">
                 <li>
-                  <div (click)="addToGame(soldier)" class="soldier-container" [ngClass]="ctrlPressed ? 'ctrl-press' : ''"
-                    (mouseenter)="enter(i, soldier, 'soldiers')" (mouseleave)="leave()">
+                  <div (click)="addToGame(soldier)" class="soldier-container"
+                    [ngClass]="ctrlPressed ? 'ctrl-press' : ''" (mouseenter)="enter(i, soldier, 'soldiers')"
+                    (mouseleave)="leave()">
                     <clr-tooltip>
                       <p clrTooltipTrigger>{{soldier.name}}</p>
                       <ng-container *ngIf="ctrlPressed">
@@ -34,8 +35,13 @@
                         </clr-tooltip-content>
                       </ng-container>
                     </clr-tooltip>
-                    <cds-icon *ngIf="this.onIndex === i && this.overScrollView === 'soldiers'" shape="angle-double"
-                      direction="right" />
+                    <ng-container *ngIf="this.onIndex === i && this.overScrollView === 'soldiers'">
+                      <cds-icon *ngIf="!this.ctrlPressed; else out1" shape="angle-double" direction="right" />
+                      <ng-template #out1>
+                        <cds-icon shape="pop-out" />
+                      </ng-template>
+
+                    </ng-container>
                   </div>
                 </li>
               </ng-container>
@@ -69,8 +75,9 @@
               <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%;">
                 <ng-container *cdkVirtualFor="let soldier of gameRebels; let i=index">
                   <li>
-                    <div (click)="removeFromGame(soldier)" class="soldier-container" [ngClass]="ctrlPressed ? 'ctrl-press' : ''"
-                      (mouseenter)="enter(i, soldier, 'rebels')" (mouseleave)="leave()">
+                    <div (click)="removeFromGame(soldier)" class="soldier-container"
+                      [ngClass]="ctrlPressed ? 'ctrl-press' : ''" (mouseenter)="enter(i, soldier, 'rebels')"
+                      (mouseleave)="leave()">
                       <clr-tooltip>
                         <p clrTooltipTrigger>{{soldier.name}}</p>
                         <ng-container *ngIf="ctrlPressed">
@@ -79,7 +86,12 @@
                           </clr-tooltip-content>
                         </ng-container>
                       </clr-tooltip>
-                      <cds-icon *ngIf="this.onIndex === i && this.overScrollView === 'rebels'" shape="times" />
+                      <ng-container *ngIf="this.onIndex === i && this.overScrollView === 'rebels'">
+                        <cds-icon  *ngIf="!this.ctrlPressed; else out2" shape="times" />
+                      </ng-container>
+                      <ng-template #out2>
+                        <cds-icon shape="pop-out"/>
+                      </ng-template>
                     </div>
                   </li>
                 </ng-container>
@@ -96,8 +108,9 @@
               <cdk-virtual-scroll-viewport itemSize="24" style="height: 100%">
                 <ng-container *cdkVirtualFor="let soldier of gameEmpires; let i=index">
                   <li>
-                    <div (click)="removeFromGame(soldier)" class="soldier-container" [ngClass]="ctrlPressed ? 'ctrl-press' : ''"
-                      (mouseenter)="enter(i, soldier, 'empires')" (mouseleave)="leave()">
+                    <div (click)="removeFromGame(soldier)" class="soldier-container"
+                      [ngClass]="ctrlPressed ? 'ctrl-press' : ''" (mouseenter)="enter(i, soldier, 'empires')"
+                      (mouseleave)="leave()">
                       <clr-tooltip>
                         <p clrTooltipTrigger>{{soldier.name}}</p>
                         <ng-container *ngIf="ctrlPressed">
@@ -106,7 +119,12 @@
                           </clr-tooltip-content>
                         </ng-container>
                       </clr-tooltip>
-                      <cds-icon *ngIf="this.onIndex === i && this.overScrollView === 'empires'" shape="times" />
+                      <ng-container *ngIf="this.onIndex === i && this.overScrollView === 'empires'">
+                        <cds-icon  *ngIf="!this.ctrlPressed; else out3" shape="times" />
+                      </ng-container>
+                      <ng-template #out3>
+                        <cds-icon shape="pop-out"/>
+                      </ng-template>
                     </div>
                   </li>
                 </ng-container>
@@ -125,6 +143,3 @@
     </ng-container>
   </div>
 </div>
-
-
-

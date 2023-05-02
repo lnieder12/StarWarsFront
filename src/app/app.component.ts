@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ClarityIcons, bellIcon, checkIcon, timesIcon } from '@cds/core/icon';
+import { ClarityIcons, bellIcon, checkIcon, timesIcon, popOutIcon } from '@cds/core/icon';
 import '@cds/core/icon/register.js';
 
 @Component({
@@ -10,6 +10,6 @@ import '@cds/core/icon/register.js';
 export class AppComponent {
   title = 'StarWars';
   constructor () {
-    ClarityIcons.addIcons(bellIcon, checkIcon, timesIcon);
+    ClarityIcons.addIcons(bellIcon, checkIcon, timesIcon, popOutIcon);
   }
 }
