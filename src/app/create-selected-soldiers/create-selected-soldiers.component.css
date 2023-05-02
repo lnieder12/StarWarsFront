@@ -21,3 +21,13 @@ div.soldier-container p {
     width: 100%;
     user-select: none;
 }
+
+.ctrl-press p:hover {
+  color: blue;
+  text-decoration: underline;
+
+}
+
+.ctrl-press span {
+  z-index: 1000000;
+}
