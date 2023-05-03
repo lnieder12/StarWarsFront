@@ -155,7 +155,11 @@ export class CreateSelectedSoldiersComponent {
     this.soldierService.getAll()
       .subscribe(sld => {
         var list = sld.filter(sld => {
-          return !(this.gameService.contains(sld));
+          var bool = this.gameService.contains(sld);
+          if (bool) {
+            this.gameService.modify(sld);
+          }
+          return !bool;
         });
         this.soldiers = list;
         this.filteredSoldiers = list;

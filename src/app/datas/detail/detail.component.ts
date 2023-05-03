@@ -54,9 +54,7 @@ export class DetailComponent {
           this.soldier = sld;
           this.newName = "";
           this.editName = false;
-          if (this.gameService.contains(sld)) {
-            this.gameService.modify(sld);
-          }
+
         });
   }
 
@@ -67,9 +65,7 @@ export class DetailComponent {
           this.soldier = sld;
           this.newAtt = 0;
           this.editAtt = false;
-          if (this.gameService.contains(sld)) {
-            this.gameService.modify(sld);
-          }
+
         });
   }
 
@@ -80,9 +76,7 @@ export class DetailComponent {
           this.soldier = sld;
           this.newHp = 0;
           this.editHp = false;
-          if (this.gameService.contains(sld)) {
-            this.gameService.modify(sld);
-          }
+
         });
   }
 
