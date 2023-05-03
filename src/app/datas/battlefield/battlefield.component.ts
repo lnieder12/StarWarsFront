@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 import { Coords } from 'src/app/interfaces/coords';
 import { Line } from 'src/app/interfaces/line';

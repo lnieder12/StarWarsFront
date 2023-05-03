@@ -1,12 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 
 import { Soldier } from '../../interfaces/soldier';
 import { SoldiersService } from '../../services/soldiers.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { NbValidator } from 'src/app/numberValidator';
-import { ContainerIdService } from '@clr/angular/forms/common/providers/container-id.service';
-import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-detail',
@@ -14,6 +12,12 @@ import { GameService } from 'src/app/services/game.service';
   styleUrls: ['./detail.component.css', "../../../styles.css"]
 })
 export class DetailComponent {
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if(event.key === "Escape")
+      this.closeForms();
+  }
 
   editName: boolean = false;
 
@@ -33,26 +37,64 @@ export class DetailComponent {
 
   soldier?: Soldier;
 
+  @ViewChild('inputAtt') inputAtt!: ElementRef;
+
+  @ViewChild('inputHp') inputHp!: ElementRef;
+
+  @ViewChild('inputName') inputName!: ElementRef;
+
   constructor(
     private route: ActivatedRoute,
     private soldierService: SoldiersService,
-    private gameService: GameService
   ) { }
+
+  openForm(stat: string): void {
+    if (stat === "name") {
+      this.editName = true;
+      setTimeout(() => {
+        this.inputName.nativeElement.focus();
+        this.inputName.nativeElement.select();
+      }, 0);
+    }
+    if (stat === "hp") {
+      this.editHp = true;
+      setTimeout(() => {
+        this.inputHp.nativeElement.focus();
+        this.inputHp.nativeElement.select();
+      }, 0);
+    }
+    if (stat === "att") {
+      this.editAtt = true;
+      setTimeout(() => {
+        this.inputAtt.nativeElement.focus();
+        this.inputAtt.nativeElement.select();
+      }, 0);
+    }
+  }
+
+  closeForms(): void {
+    this.editAtt = false;
+    this.editHp = false;
+    this.editName = false;
+  }
 
   getSoldier(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.soldierService.getSoldier(id)
-      .subscribe(soldier => {
-        this.soldier = soldier
+      .subscribe(sld => {
+        this.soldier = sld;
+        this.newName = sld.name;
+        this.newAtt = sld.attack;
+        this.newHp = sld.maxHealth;
       });
   }
 
   patchName(): void {
     if (this.soldier)
-      this.soldierService.patchSoldierName(this.soldier.id, this.newName)
+      this.soldierService.patchSoldierName(this.soldier.id, this.newName ?? "")
         .subscribe(sld => {
           this.soldier = sld;
-          this.newName = "";
+          this.newName = sld.name;
           this.editName = false;
 
         });
@@ -60,10 +102,10 @@ export class DetailComponent {
 
   patchAttack(): void {
     if (this.soldier)
-      this.soldierService.patchSoldierAtt(this.soldier.id, this.newAtt)
+      this.soldierService.patchSoldierAtt(this.soldier.id, this.newAtt ?? 0)
         .subscribe(sld => {
           this.soldier = sld;
-          this.newAtt = 0;
+          this.newAtt = sld.attack;
           this.editAtt = false;
 
         });
@@ -71,10 +113,10 @@ export class DetailComponent {
 
   patchHp(): void {
     if (this.soldier)
-      this.soldierService.patchSoldierHp(this.soldier.id, this.newHp)
+      this.soldierService.patchSoldierHp(this.soldier.id, this.newHp ?? 0)
         .subscribe(sld => {
           this.soldier = sld;
-          this.newHp = 0;
+          this.newHp = sld.maxHealth;
           this.editHp = false;
 
         });

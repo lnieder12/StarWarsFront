@@ -1,20 +1,19 @@
 <div class="line">
   <ul class="nav"></ul>
 </div>
-
 <div *ngIf="soldier" class="pad-left">
   <h2>Soldier #{{ soldier.id }}</h2>
   <div>
     <div>
       <label>Name : </label>
       <ng-container *ngIf="!editName; else edit1">
-        <a (click)="editName = true" class="label clickable" href="javascript://">{{ soldier.name }}</a>
+        <a (click)="openForm('name');" class="label clickable" href="javascript://">{{ soldier.name }}</a>
       </ng-container>
       <ng-template #edit1>
         <form class="clr-form" (submit)="patchName()">
-          <input type="text" class="clr-input" name="inputName" [(ngModel)]="newName" placeholder="New Name">
+          <input #inputName type="text" class="clr-input" [(ngModel)]="newName" name="inputName" placeholder="New Name">
           <button type="submit" class="btn">&check;</button>
-          <button (click)="editName = false;" class="btn">&cross;</button>
+          <button (click)="closeForms();" class="btn">&cross;</button>
 
         </form>
       </ng-template>
@@ -22,32 +21,32 @@
     <div>
       <label>Health : </label>
       <ng-container *ngIf="!editHp; else edit2">
-        <a (click)="editHp = true" class="label clickable" href="javascript://">{{ soldier.maxHealth }}</a>
+        <a (click)="openForm('hp');" class="label clickable" href="javascript://">{{ soldier.maxHealth }}</a>
       </ng-container>
 
       <ng-template #edit2>
         <form class="clr-form clr-form-horizontal" (submit)="patchHp()">
-          <input (keyup)="validateHp($event)" type="text" class="clr-input" name="inputHp" [(ngModel)]="newHp"
+          <input #inputHp (keyup)="validateHp($event)" type="text" name="inputHp" class="clr-input" [(ngModel)]="newHp"
             placeholder="New MaxHp">
             <clr-control-helper>Range: 1000 - 2000</clr-control-helper>
             <button [disabled]="errorHp" type="submit" class="btn">&check;</button>
-            <button (click)="editHp = false;" class="btn">&cross;</button>
+            <button (click)="closeForms();" class="btn">&cross;</button>
         </form>
       </ng-template>
     </div>
     <div>
       <label>Attack : </label>
       <ng-container *ngIf="!editAtt; else edit3">
-        <a (click)="editAtt = true;" class="label clickable" href="javascript://">{{ soldier.attack }}</a>
+        <a (click)="openForm('att');" class="label clickable" href="javascript://">{{ soldier.attack }}</a>
       </ng-container>
 
       <ng-template #edit3>
         <form class="clr-form" (submit)="patchAttack()">
-          <input (keyup)="validateAtt($event)" type="text" class="clr-input" name="inputAtt" [(ngModel)]="newAtt"
+          <input #inputAtt (keyup)="validateAtt($event)" type="text" name="inputAtt" class="clr-input" [(ngModel)]="newAtt"
             placeholder="New Attack">
           <clr-control-helper>Range: 100 - 500</clr-control-helper>
           <button [disabled]="errorAtt" type="submit" class="btn">&check;</button>
-          <button (click)="editAtt = false;" class="btn">&cross;</button>
+          <button (click)="closeForms();" class="btn">&cross;</button>
         </form>
       </ng-template>
 

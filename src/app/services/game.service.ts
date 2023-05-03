@@ -23,19 +23,18 @@ export class GameService {
 
   contains(soldier: Soldier): boolean {
     var bool: boolean = false;
-    const emps = this.empiresSubject.getValue();
-    const rebs = this.rebelsSubject.getValue();
+    var list;
+    if (soldier.soldierType === "Rebel") {
+      list = this.rebelsSubject.getValue();
+    }
+    else {
+      list = this.empiresSubject.getValue();
+    }
 
-    emps.forEach(sld => {
+    list.forEach(sld => {
       if (!bool)
         bool = sameSoldier(sld, soldier);
     });
-    if (!bool) {
-      rebs.forEach(sld => {
-        if (!bool)
-          bool = sameSoldier(sld, soldier)
-      });
-    }
     return bool;
   }
 
