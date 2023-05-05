@@ -3,7 +3,16 @@
         <clr-dg-column [clrDgField]="'soldier.name'" [clrDgSortBy]="nameComparator">Soldier</clr-dg-column>
         <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">
             Score
-            <clr-dg-numeric-filter [clrDgNumericFilter]="scoreFilter"></clr-dg-numeric-filter>
+            <clr-dg-filter [clrDgFilter]="scoreFilter">
+              <clr-input-container>
+                <label>Min</label>
+                <input (change)="onFilterChange($event)" type="number" clrInput [(ngModel)]="scoreFilter.min" />
+              </clr-input-container>
+              <clr-input-container>
+                <label>Max</label>
+                <input (change)="onFilterChange($event)" type="number" clrInput [(ngModel)]="scoreFilter.max" />
+              </clr-input-container>
+            </clr-dg-filter>
         </clr-dg-column>
 
         <clr-dg-row *clrDgItems="let score of scores">

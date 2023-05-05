@@ -39,4 +39,9 @@ export class ScoreTableComponent {
     this.getAll();
   }
 
+  onFilterChange(evt: any) {
+    console.log(evt);
+    this.scoreFilter.apply()
+  }
+
 }

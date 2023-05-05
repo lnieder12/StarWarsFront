@@ -1,5 +1,5 @@
 <div *ngIf="soldiers; else notFound">
-    <clr-datagrid>
+    <clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
         <clr-dg-column [clrDgField]="'rebel.name'" [clrDgSortBy]="soldierComparator">Rebels</clr-dg-column>
         <clr-dg-column [clrDgField]="'empire.name'" [clrDgSortBy]="soldierComparator"  >Empires</clr-dg-column>
 
