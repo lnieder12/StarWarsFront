@@ -17,8 +17,9 @@ import { ScoreTableComponent } from './lists/score-table/score-table.component';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { GameOutletComponent } from './game-outlet/game-outlet.component';
-import { BattlefieldComponent } from './datas/battlefield/battlefield.component';
-import { CreateSelectedSoldiersComponent } from './create-selected-soldiers/create-selected-soldiers.component';
+import { BattlefieldComponent } from './datas/fight/battlefield/battlefield.component';
+import { CreateSelectedSoldiersComponent } from './form/create-selected-soldiers/create-selected-soldiers.component';
+import { CreateSoldierComponent } from './form/create-soldier/create-soldier.component';
 
 
 
@@ -34,6 +35,7 @@ import { CreateSelectedSoldiersComponent } from './create-selected-soldiers/crea
     GameOutletComponent,
     BattlefieldComponent,
     CreateSelectedSoldiersComponent,
+    CreateSoldierComponent,
   ],
   imports: [
     BrowserModule,

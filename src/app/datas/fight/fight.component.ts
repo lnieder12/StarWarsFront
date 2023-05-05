@@ -1,12 +1,11 @@
 import { Component, Input, ViewChild, } from '@angular/core';
 
-import { Game } from '../../interfaces/game';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GameService } from '../../services/game.service';
-import { SoldiersService } from '../../services/soldiers.service';
+import { ActivatedRoute } from '@angular/router';
 import { Round } from 'src/app/interfaces/round';
-import { BattlefieldComponent } from '../battlefield/battlefield.component';
-import { delay } from 'rxjs';
+import { Game } from '../../interfaces/game';
+import { GameService } from '../../services/game.service';
+import { SoldierService } from '../../services/soldiers.service';
+import { BattlefieldComponent } from './battlefield/battlefield.component';
 
 @Component({
   selector: 'app-fight',
@@ -40,7 +39,7 @@ export class FightComponent {
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
-    private soldierService: SoldiersService
+    private soldierService: SoldierService
   ) { }
 
   sendRound(rounds: Round[]): void {

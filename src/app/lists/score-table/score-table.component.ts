@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Score } from '../../interfaces/scores';
-import { SoldiersService } from '../../services/soldiers.service';
+import { SoldierService } from '../../services/soldiers.service';
 import { GameService } from '../../services/game.service';
 import { ActivatedRoute } from '@angular/router';
 import { ClrDatagridSortOrder } from '@clr/angular';

@@ -7,7 +7,7 @@ import { Soldier } from '../interfaces/soldier';
 @Injectable({
   providedIn: 'root'
 })
-export class SoldiersService {
+export class SoldierService {
 
   private _apiUrl = 'https://localhost:7038/';
   private _soldierUrl = 'soldier';
@@ -65,6 +65,11 @@ export class SoldiersService {
     const patch = newName ? [{ op: "replace", path: "/name", value: newName }] : [];
     const url = `${this._apiUrl + this._soldierUrl}/${id}`;
     return this.http.patch<Soldier>(url, patch);
+  }
+
+  add(soldier: Soldier, soldierType: string): Observable<Soldier> {
+    const url = `${this._apiUrl + soldierType}`;
+    return this.http.post<Soldier>(url, soldier);
   }
 
 }

@@ -1,10 +1,10 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 
 import { Soldier } from '../../interfaces/soldier';
-import { SoldiersService } from '../../services/soldiers.service';
+import { SoldierService } from '../../services/soldiers.service';
 
 import { ActivatedRoute } from '@angular/router';
-import { NbValidator } from 'src/app/numberValidator';
+import { AttValidator, HpValidator, NbValidator } from 'src/app/numberValidator';
 
 @Component({
   selector: 'app-detail',
@@ -45,7 +45,7 @@ export class DetailComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private soldierService: SoldiersService,
+    private soldierService: SoldierService,
   ) { }
 
   openForm(stat: string): void {
@@ -125,12 +125,12 @@ export class DetailComponent {
   validateHp(x: any): void {
     const hp = x.target.value;
     console.log(Number(hp));
-    this.errorHp = !NbValidator(hp) || 1000 > Number(hp) || Number(hp) > 2000;
+    this.errorHp = !HpValidator(hp);
   }
 
   validateAtt(x: any): void {
     const att = x.target.value;
-    this.errorAtt = !NbValidator(att) || 100 > Number(att) || Number(att) > 500;
+    this.errorAtt = !AttValidator(att);
   }
 
   ngOnInit(): void {

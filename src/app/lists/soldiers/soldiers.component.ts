@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-
-import { SoldiersService } from '../../services/soldiers.service';
 import { Rebel_Empire } from '../../interfaces/rebel-empire';
+import { SoldierService } from '../../services/soldiers.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, max, of } from 'rxjs';
@@ -21,7 +20,7 @@ export class SoldiersComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private soldierService: SoldiersService
+    private soldierService: SoldierService
   ) { }
 
   getAll(): void {
@@ -31,7 +30,7 @@ export class SoldiersComponent {
         rebels: this.soldierService.getRebels(id),
         empires: this.soldierService.getEmpires(id)
       }).subscribe(results => {
-  
+
         of(results.rebels.length, results.empires.length)
           .pipe(max())
           .subscribe(x => {

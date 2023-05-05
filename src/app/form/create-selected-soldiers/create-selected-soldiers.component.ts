@@ -2,15 +2,15 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Component, HostListener, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { Soldier } from '../interfaces/soldier';
-import { NbValidator } from '../numberValidator';
-import { GameService } from '../services/game.service';
-import { SoldiersService } from '../services/soldiers.service';
+import { Soldier } from '../../interfaces/soldier';
+import { NbValidator } from '../../numberValidator';
+import { GameService } from '../../services/game.service';
+import { SoldierService } from '../../services/soldiers.service';
 
 @Component({
   selector: 'app-create-selected-soldiers',
   templateUrl: './create-selected-soldiers.component.html',
-  styleUrls: ['./create-selected-soldiers.component.css', '../../styles.css']
+  styleUrls: ['./create-selected-soldiers.component.css', '../../../styles.css']
 })
 export class CreateSelectedSoldiersComponent {
 
@@ -56,7 +56,7 @@ export class CreateSelectedSoldiersComponent {
 
   constructor(
     private gameService: GameService,
-    private soldierService: SoldiersService,
+    private soldierService: SoldierService,
     private route: ActivatedRoute,
     private router: Router
   ) {

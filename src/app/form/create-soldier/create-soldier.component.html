@@ -1,0 +1,31 @@
+<div class="card">
+  <form clrform [formGroup]="form" (submit)="createSoldier()" style="margin-left: 8px;">
+      <clr-input-container>
+          <label>Name</label>
+          <input clrInput formControlName="inputName" />
+          <clr-control-error *clrIfError="'required'">This field is required</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+          <label>Max health</label>
+          <input clrInput formControlName="inputHp" />
+          <clr-control-helper>Range: 1000 - 2000</clr-control-helper>
+          <clr-control-error *clrIfError="'!pattern'">Only numbers are allowed.</clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+          <label>Attack</label>
+          <input clrInput formControlName="inputAtt" />
+          <clr-control-helper>Range: 100 - 500</clr-control-helper>
+          <clr-control-error *clrIfError="'required'">This field is required</clr-control-error>
+          <clr-control-error *clrIfError="'!pattern'">Only numbers are allowed</clr-control-error>
+      </clr-input-container>
+      <clr-select-container>
+        <label>Team</label>
+        <select clrSelect formControlName="inputType" >
+          <option value="rebel">Rebel</option>
+          <option value="empire">Empire</option>
+        </select>
+        <clr-control-error *clrIfError="'!pattern'">Only numbers are allowed.</clr-control-error>
+    </clr-select-container>
+      <input type="submit" [disabled]="!form.dirty || form.invalid" value="Submit" class="btn"/>
+  </form>
+</div>
