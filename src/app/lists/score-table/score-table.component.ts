@@ -21,16 +21,32 @@ export class ScoreTableComponent {
 
   nameComparator = new SoldierNameComparator();
 
+  gameId: number = 0;
+
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
   ) { }
 
   getAll(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.gameService.getScores(id)
-        .subscribe(score => this.scores = score);
+
+    if (this.gameId) {
+      this.gameService.getScores(this.gameId)
+        .subscribe(score => {
+          this.scores = score;
+          console.log(score);
+        });
+    }
+  }
+
+  getPage(params: HttpParams): void {
+    if (this.gameId) {
+      this.gameService.getScoresPage(this.gameId, params)
+        .subscribe(score => {
+          this.scores = score;
+          console.log(score);
+        });
+
     }
   }
 
@@ -38,6 +54,7 @@ export class ScoreTableComponent {
 
     var params = new HttpParams();
 
+    // Filters
     if (state.filters) {
       for (let filter of state.filters) {
         if (filter.min || filter.max) {
@@ -53,12 +70,14 @@ export class ScoreTableComponent {
         }
         else {
           let { property, value } = <{ property: string, value: string }>filter;
-          if([property] && [value]) {
+          if ([property] && [value]) {
             params = params.set(property, value);
           }
         }
       }
     }
+    /*
+    // Sort
     if (state.sort) {
       const field = Object(state.sort.by)['field'];
       var col;
@@ -70,22 +89,28 @@ export class ScoreTableComponent {
       }
       var sort = state.sort.reverse ? ':asc' : ':desc';
       params = params.set('sort', col + sort);
+    }*/
+
+    // Page
+    const limit = state.page?.size ?? 0;
+    params = params.set('limit', limit);
+    if (this.scores) {
+      const lastId = this.scores[this.scores.length - 1].gsId;
+      params = params.set('marker', lastId);
     }
 
-
-    var sorting = params ?
-      { params : params } : {};
-
-    console.log(Object(params)['updates']);
+    // console.log(Object(params)['updates']);
+    this.getPage(params);
   }
 
 
   ngOnInit(): void {
-    this.getAll();
+    this.gameId = Number(this.route.snapshot.paramMap.get('id'));
+    //this.getAll();
+    this.getPage({} as HttpParams);
   }
 
   onFilterChange(evt: any) {
-    //console.log(evt);
     this.scoreFilter.apply()
   }
 

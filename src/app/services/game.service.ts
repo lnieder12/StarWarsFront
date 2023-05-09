@@ -140,6 +140,12 @@ export class GameService {
     return this.http.get<Score[]>(url);
   }
 
+  getScoresPage(id: number, params: HttpParams): Observable<Score[]> {
+    const options = params ? { params: params } : {};
+    const url = `${this._apiUrl}/${id}/score/page`;
+    return this.http.get<Score[]>(url, options);
+  }
+
   enoughSoldiers(id: number): Observable<boolean> {
     const url = `${this._apiUrl}/${id}/enoughSoldiers`;
     return this.http.get<boolean>(url);
