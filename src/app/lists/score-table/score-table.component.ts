@@ -23,6 +23,8 @@ export class ScoreTableComponent {
 
   gameId: number = 0;
 
+  total: number = 0;
+
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
@@ -46,11 +48,16 @@ export class ScoreTableComponent {
           this.scores = score;
           console.log(score);
         });
+      this.gameService.getScoreCount(this.gameId, params)
+        .subscribe(count => {
+          this.total = count;
+        });
 
     }
   }
 
   refresh(state: ClrDatagridStateInterface) {
+
 
     var params = new HttpParams();
 
@@ -76,7 +83,7 @@ export class ScoreTableComponent {
         }
       }
     }
-    /*
+
     // Sort
     if (state.sort) {
       const field = Object(state.sort.by)['field'];
@@ -89,14 +96,14 @@ export class ScoreTableComponent {
       }
       var sort = state.sort.reverse ? ':asc' : ':desc';
       params = params.set('sort', col + sort);
-    }*/
+    }
 
     // Page
     const limit = state.page?.size ?? 0;
     params = params.set('limit', limit);
     if (this.scores) {
       const lastId = this.scores[this.scores.length - 1].gsId;
-      params = params.set('marker', lastId);
+      // params = params.set('marker', lastId);
     }
 
     // console.log(Object(params)['updates']);
