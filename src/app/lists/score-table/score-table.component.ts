@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
-import { Score } from '../../interfaces/scores';
-import { SoldierService } from '../../services/soldiers.service';
-import { GameService } from '../../services/game.service';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { ClrDatagridSortOrder } from '@clr/angular';
+import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { Score } from '../../interfaces/scores';
 import { ScoreFilter, SoldierNameComparator } from '../../scoreFilter';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-scores',
@@ -34,13 +34,58 @@ export class ScoreTableComponent {
     }
   }
 
+  refresh(state: ClrDatagridStateInterface) {
+
+    var params = new HttpParams();
+
+    if (state.filters) {
+      for (let filter of state.filters) {
+        if (filter.min || filter.max) {
+          const gt = filter.min ? `gt:${filter.min}` : '';
+          const lt = filter.max ? `lt:${filter.max}` : '';
+          var between = gt;
+          if (gt && lt) {
+            between += ',';
+          }
+          between += lt;
+          params = params.set('score', between);
+          // filters['score'] = [{ min: filter.min, max: filter.max }];
+        }
+        else {
+          let { property, value } = <{ property: string, value: string }>filter;
+          if([property] && [value]) {
+            params = params.set(property, value);
+          }
+        }
+      }
+    }
+    if (state.sort) {
+      const field = Object(state.sort.by)['field'];
+      var col;
+      if (field) {
+        col = field;
+      }
+      else {
+        col = state.sort?.by;
+      }
+      var sort = state.sort.reverse ? ':asc' : ':desc';
+      params = params.set('sort', col + sort);
+    }
+
+
+    var sorting = params ?
+      { params : params } : {};
+
+    console.log(Object(params)['updates']);
+  }
+
 
   ngOnInit(): void {
     this.getAll();
   }
 
   onFilterChange(evt: any) {
-    console.log(evt);
+    //console.log(evt);
     this.scoreFilter.apply()
   }
 

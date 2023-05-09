@@ -2,7 +2,17 @@ import { ClrDatagridComparatorInterface, ClrDatagridFilterInterface } from "@clr
 import { Subject } from "rxjs";
 import { Score } from "./interfaces/scores";
 
-export class ScoreFilter implements ClrDatagridFilterInterface<Score> {
+
+
+type FilterScoreObject = {
+  field: string;
+  value: {
+    min: number | undefined;
+    max: number | undefined;
+  };
+};
+
+export class ScoreFilter implements ClrDatagridFilterInterface<Score, FilterScoreObject> {
 
   min?: number;
   max?: number;
@@ -15,15 +25,23 @@ export class ScoreFilter implements ClrDatagridFilterInterface<Score> {
   }
 
   isActive(): boolean {
-    return this.min !== undefined && this.max !== undefined;
+    if (this.min || this.max) {
+      return true;
+    }
+    return false;
   }
 
-  get state() {
-    return {field: 'score', value: {min: this.min, max: this.max}};
+  /*
+  state(): FilterScoreObject {
+    let obj = {} as FilterScoreObject;
+    obj.field = 'score';
+    obj.value = {min: this.min, max: this.max};
+    return obj;
   }
+  */
 
   apply(): void {
-    this.changes.next({min: this.min, max: this.max});
+    this.changes.next({ min: this.min, max: this.max });
   }
 
   clear(): void {
@@ -34,6 +52,9 @@ export class ScoreFilter implements ClrDatagridFilterInterface<Score> {
 }
 
 export class SoldierNameComparator implements ClrDatagridComparatorInterface<Score> {
+
+  field: string = 'soldier.name';
+
   compare(a: Score, b: Score): number {
     return a.soldier.id - b.soldier.id;
   }

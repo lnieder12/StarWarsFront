@@ -1,43 +1,43 @@
 <div *ngIf="scores; else wait">
-    <clr-datagrid>
-        <clr-dg-column [clrDgField]="'soldier.name'" [clrDgSortBy]="nameComparator">Soldier</clr-dg-column>
-        <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">
-            Score
-            <clr-dg-filter [clrDgFilter]="scoreFilter">
-              <clr-input-container>
-                <label>Min</label>
-                <input (change)="onFilterChange($event)" type="number" clrInput [(ngModel)]="scoreFilter.min" />
-              </clr-input-container>
-              <clr-input-container>
-                <label>Max</label>
-                <input (change)="onFilterChange($event)" type="number" clrInput [(ngModel)]="scoreFilter.max" />
-              </clr-input-container>
-            </clr-dg-filter>
-        </clr-dg-column>
+  <clr-datagrid (clrDgRefresh)="refresh($event)">
+    <clr-dg-column [clrDgField]="'soldier.name'" [clrDgSortBy]="nameComparator">Soldier</clr-dg-column>
+    <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">
+      Score
+      <clr-dg-filter [clrDgFilter]="scoreFilter">
+        <clr-input-container>
+          <label>Min</label>
+          <input (change)="onFilterChange($event)" type="number" clrInput [(ngModel)]="scoreFilter.min" />
+        </clr-input-container>
+        <clr-input-container>
+          <label>Max</label>
+          <input (change)="onFilterChange($event)" type="number" clrInput [(ngModel)]="scoreFilter.max" />
+        </clr-input-container>
+      </clr-dg-filter>
+    </clr-dg-column>
 
-        <clr-dg-row *clrDgItems="let score of scores">
-            <clr-dg-cell>
-                <a routerLink="/soldier/{{score.soldier.id}}">{{score.soldier.name}}</a>
-            </clr-dg-cell>
-            <clr-dg-cell>
-                <span>{{score.score}}</span>
-            </clr-dg-cell>
-        </clr-dg-row>
+    <clr-dg-row *clrDgItems="let score of scores">
+      <clr-dg-cell>
+        <a routerLink="/soldier/{{score.soldier.id}}">{{score.soldier.name}}</a>
+      </clr-dg-cell>
+      <clr-dg-cell>
+        <span>{{score.score}}</span>
+      </clr-dg-cell>
+    </clr-dg-row>
 
 
-        <clr-dg-footer>
-            <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="scores.length">
-                <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Rows per page</clr-dg-page-size>
-                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
-                of {{pagination.totalItems}} rows
-            </clr-dg-pagination>
-        </clr-dg-footer>
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="scores.length">
+        <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Rows per page</clr-dg-page-size>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+        of {{pagination.totalItems}} rows
+      </clr-dg-pagination>
+    </clr-dg-footer>
 
-    </clr-datagrid>
+  </clr-datagrid>
 
 
 </div>
 
 <ng-template #wait>
-    <span class="spinner spinner-md">Loading...</span>
+  <span class="spinner spinner-md">Loading...</span>
 </ng-template>
