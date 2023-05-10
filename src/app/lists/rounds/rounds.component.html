@@ -10,11 +10,15 @@
         <clr-dg-column [clrDgField]="'defender.name'" [clrDgSortBy]="defenderComparator">Defender</clr-dg-column>
         <clr-dg-column [clrDgField]="'damage'" >
             Damage
-            <clr-dg-numeric-filter [clrDgNumericFilter]="damageFilter" />
+            <clr-dg-filter [clrDgFilter]="damageFilter">
+              <number-filter #damageFilter [field]="'damage'" />
+            </clr-dg-filter>
         </clr-dg-column>
         <clr-dg-column [clrDgField]="'hpLeft'" >
             Hp left
-            <clr-dg-numeric-filter [clrDgNumericFilter]="hpLeftFilter" />
+            <clr-dg-filter [clrDgFilter]="hpFilter">
+              <number-filter #hpFilter [field]="'hpLeft'" />
+            </clr-dg-filter>
         </clr-dg-column>
 
         <clr-dg-row *clrDgItems="let round of rounds;">

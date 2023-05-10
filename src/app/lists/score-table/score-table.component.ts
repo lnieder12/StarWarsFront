@@ -4,7 +4,6 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { Score } from '../../interfaces/scores';
-import { ScoreFilter, SoldierNameComparator } from '../../scoreFilter';
 import { GameService } from '../../services/game.service';
 
 @Component({
@@ -16,10 +15,6 @@ export class ScoreTableComponent {
 
   scores?: Score[];
   descSort = ClrDatagridSortOrder.DESC;
-
-  scoreFilter = new ScoreFilter;
-
-  nameComparator = new SoldierNameComparator();
 
   gameId: number = 0;
 
@@ -117,10 +112,6 @@ export class ScoreTableComponent {
     this.gameId = Number(this.route.snapshot.paramMap.get('id'));
     //this.getAll();
     this.getPage({} as HttpParams);
-  }
-
-  onFilterChange(evt: any) {
-    this.scoreFilter.apply()
   }
 
 }

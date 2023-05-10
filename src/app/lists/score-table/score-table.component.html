@@ -1,17 +1,10 @@
 <div *ngIf="scores; else wait">
   <clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
-    <clr-dg-column [clrDgField]="'soldier.name'" [clrDgSortBy]="nameComparator">Soldier</clr-dg-column>
+    <clr-dg-column [clrDgField]="'soldier.name'">Soldier</clr-dg-column>
     <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">
       Score
       <clr-dg-filter [clrDgFilter]="scoreFilter">
-        <clr-input-container>
-          <label>Min</label>
-          <input (change)="onFilterChange($event)" type="number" clrInput [(ngModel)]="scoreFilter.min" />
-        </clr-input-container>
-        <clr-input-container>
-          <label>Max</label>
-          <input (change)="onFilterChange($event)" type="number" clrInput [(ngModel)]="scoreFilter.max" />
-        </clr-input-container>
+        <number-filter #scoreFilter [field]="'score'" />
       </clr-dg-filter>
     </clr-dg-column>
 
