@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { Score } from '../../interfaces/scores';
 import { GameService } from '../../services/game.service';
-import { getFilters } from 'src/httpParamsFunctions';
+import { getFilters, setSorting } from 'src/httpParamsFunctions';
 
 @Component({
   selector: 'app-scores',
@@ -63,18 +63,7 @@ export class ScoreTableComponent {
     params = getFilters(state, params);
 
     // Sort
-    if (state.sort) {
-      const field = Object(state.sort.by)['field'];
-      var col;
-      if (field) {
-        col = field;
-      }
-      else {
-        col = state.sort?.by;
-      }
-      var sort = state.sort.reverse ? ':asc' : ':desc';
-      params = params.set('sort', col + sort);
-    }
+    params = setSorting(state, params);
 
     // Page
     if (this.scores && this.scores.length > 0) {

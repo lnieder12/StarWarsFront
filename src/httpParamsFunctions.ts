@@ -28,3 +28,21 @@ export function getFilters(state: ClrDatagridStateInterface, pParams: HttpParams
   return params;
 
 }
+
+export function setSorting(state: ClrDatagridStateInterface, pParams: HttpParams): HttpParams
+{
+  var params = pParams;
+  if (state.sort) {
+    const field = Object(state.sort.by)['field'];
+    var col;
+    if (field) {
+      col = field;
+    }
+    else {
+      col = state.sort?.by;
+    }
+    var sort = state.sort.reverse ? ':asc' : ':desc';
+    params = params.set('sort', col + sort);
+  }
+  return params;
+}
