@@ -148,7 +148,19 @@ export class GameService {
 
   getScoreCount(id: number, params: HttpParams): Observable<number> {
     const options = params ? { params: params } : {};
-    const url = `${this._apiUrl}/${id}/score/count`;
+    const url = `${this._apiUrl}/${id}/score/page/count`;
+    return this.http.get<number>(url, options);
+  }
+
+  getRoundsPage(id: number, params: HttpParams): Observable<Round[]> {
+    const options = params ? { params: params } : {};
+    const url = `${this._apiUrl}/${id}/round/page`;
+    return this.http.get<Round[]>(url, options);
+  }
+
+  getRoundsCount(id: number, params: HttpParams): Observable<number> {
+    const options = params ? { params: params } : {};
+    const url = `${this._apiUrl}/${id}/round/page/count`;
     return this.http.get<number>(url, options);
   }
 

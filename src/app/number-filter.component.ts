@@ -49,6 +49,7 @@ export class NumberFilterComponent<T> implements ClrDatagridFilterInterface<T> {
   clear(): void {
     this.min = undefined;
     this.max = undefined;
+    this.apply();
   }
 
 }

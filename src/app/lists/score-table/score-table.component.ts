@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { Score } from '../../interfaces/scores';
 import { GameService } from '../../services/game.service';
+import { getFilters } from 'src/httpParamsFunctions';
 
 @Component({
   selector: 'app-scores',
@@ -59,27 +60,7 @@ export class ScoreTableComponent {
     var params = new HttpParams();
 
     // Filters
-    if (state.filters) {
-      for (let filter of state.filters) {
-        if (filter.min || filter.max) {
-          const gt = filter.min ? `gte:${filter.min}` : '';
-          const lt = filter.max ? `lte:${filter.max}` : '';
-          var between = gt;
-          if (gt && lt) {
-            between += ',';
-          }
-          between += lt;
-          params = params.set('score', between);
-          // filters['score'] = [{ min: filter.min, max: filter.max }];
-        }
-        else {
-          let { property, value } = <{ property: string, value: string }>filter;
-          if ([property] && [value]) {
-            params = params.set(property, value);
-          }
-        }
-      }
-    }
+    params = getFilters(state, params);
 
     // Sort
     if (state.sort) {
