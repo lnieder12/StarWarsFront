@@ -5,9 +5,9 @@
         <button class="btn btn-secondary" (click)="clearFilter()">Clear filter</button>
     </div>
 
-    <clr-datagrid>
-        <clr-dg-column [clrDgField]="'attacker.name'" [clrDgSortBy]="attackerComparator">Attacker</clr-dg-column>
-        <clr-dg-column [clrDgField]="'defender.name'" [clrDgSortBy]="defenderComparator">Defender</clr-dg-column>
+    <clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
+        <clr-dg-column [clrDgField]="'attacker.name'" >Attacker</clr-dg-column>
+        <clr-dg-column [clrDgField]="'defender.name'" >Defender</clr-dg-column>
         <clr-dg-column [clrDgField]="'damage'" >
             Damage
             <clr-dg-filter [clrDgFilter]="damageFilter">
@@ -21,7 +21,7 @@
             </clr-dg-filter>
         </clr-dg-column>
 
-        <clr-dg-row *clrDgItems="let round of rounds;">
+        <clr-dg-row *ngFor="let round of rounds;">
             <clr-dg-cell>
                 <a *ngIf="round.attacker;else elseAtt"
                     routerLink="/soldier/{{round.attacker.id}}">{{round.attacker.name}}</a>
@@ -44,10 +44,10 @@
         </clr-dg-row>
 
         <clr-dg-footer>
-            <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="rounds.length">
+            <clr-dg-pagination #pagination [clrDgPageSize]="10" [clrDgTotalItems]="total">
                 <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Rows per page</clr-dg-page-size>
                 {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
-                of {{pagination.totalItems}} rows
+                of {{total}} rows
             </clr-dg-pagination>
         </clr-dg-footer>
 

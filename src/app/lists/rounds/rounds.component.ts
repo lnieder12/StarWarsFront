@@ -3,11 +3,12 @@ import { Component, Input, QueryList, ViewChild, ViewChildren } from '@angular/c
 import { Round } from '../../interfaces/round';
 import { ActivatedRoute } from '@angular/router';
 import { RoundService } from 'src/app/services/round.service';
-import { ClrDatagridColumn, ClrDatagridSortOrder } from '@clr/angular';
+import { ClrDatagridColumn, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { AttackerComparator, DamageFilter, DefenderComparator, HpLeftFilter } from 'src/app/roundFilter';
 import { NumberFilterComponent } from 'src/app/number-filter.component';
 import { GameService } from 'src/app/services/game.service';
 import { HttpParams } from '@angular/common/http';
+import { setAllHttpParams } from 'src/httpParamsFunctions';
 
 
 @Component({
@@ -37,18 +38,8 @@ export class RoundsComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private roundService: RoundService,
     private gameService: GameService
-  ) {}
-
-  getRounds(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if(id) {
-      this.roundService.getRounds(id)
-        .subscribe(rounds => this.rounds = rounds);
-
-    }
-  }
+  ) { }
 
   clearSort(): void {
     this.columns?.forEach(col => {
@@ -71,20 +62,28 @@ export class RoundsComponent {
     }
   }
 
+  refresh(state: ClrDatagridStateInterface) {
+    this.loading = true;
+
+    var params = setAllHttpParams(state, this.rounds?.length ?? 0)
+
+    this.getPage(params);
+  }
+
   clearFilter(): void {
     this.damageFilter.clear();
     this.hpFilter.clear();
     this.columns?.forEach(col => {
       console.log(col.filterValue);
       col.filterValue = null;
-      if(col.field == "damage") {}
-        // col.setFilter(this.damageFilter);
+      if (col.field == "damage") { }
+      // col.setFilter(this.damageFilter);
     })
   }
 
-  ngOnInit():void {
+  ngOnInit(): void {
     this.gameId = Number(this.route.snapshot.paramMap.get('id'));
-    this.getRounds();
+    this.getPage({} as HttpParams);
   }
 
 }
