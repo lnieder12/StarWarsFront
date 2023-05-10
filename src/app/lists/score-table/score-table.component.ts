@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
 import { Score } from '../../interfaces/scores';
 import { GameService } from '../../services/game.service';
-import { getFilters, setSorting } from 'src/httpParamsFunctions';
+import { getFilters, setAllHttpParams, setPageLimit, setPageSkip, setSorting } from 'src/httpParamsFunctions';
 
 @Component({
   selector: 'app-scores',
@@ -57,23 +57,8 @@ export class ScoreTableComponent {
 
     this.loading = true;
 
-    var params = new HttpParams();
+    var params = setAllHttpParams(state, this.scores?.length ?? 0);
 
-    // Filters
-    params = getFilters(state, params);
-
-    // Sort
-    params = setSorting(state, params);
-
-    // Page
-    if (this.scores && this.scores.length > 0) {
-      const skip = state.page?.from ?? 0;
-      params = params.set('skip', skip);
-    }
-    const limit = state.page?.size ?? 0;
-    params = params.set('limit', limit);
-
-    // console.log(Object(params)['updates']);
     this.getPage(params);
   }
 

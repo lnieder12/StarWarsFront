@@ -46,3 +46,33 @@ export function setSorting(state: ClrDatagridStateInterface, pParams: HttpParams
   }
   return params;
 }
+
+export function setPageSkip(state: ClrDatagridStateInterface, pParams: HttpParams, length: number): HttpParams
+{
+  var params = pParams
+  if (length > 0) {
+    const skip = state.page?.from ?? 0;
+    params = params.set('skip', skip);
+  }
+
+  return params;
+}
+
+export function setPageLimit(state: ClrDatagridStateInterface, pParams: HttpParams): HttpParams
+{
+  var params = pParams;
+  const limit = state.page?.size ?? 0;
+  params = params.set('limit', limit);
+
+  return params;
+}
+
+export function setAllHttpParams(state: ClrDatagridStateInterface, length: number): HttpParams
+{
+  var params = new HttpParams();
+  params = getFilters(state, params);
+  params = setSorting(state, params);
+  params = setPageSkip(state, params, length);
+  params = setPageLimit(state, params);
+  return params;
+}
