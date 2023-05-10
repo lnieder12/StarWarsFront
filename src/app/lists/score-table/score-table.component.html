@@ -1,5 +1,5 @@
 <div *ngIf="scores; else wait">
-  <clr-datagrid (clrDgRefresh)="refresh($event)">
+  <clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
     <clr-dg-column [clrDgField]="'soldier.name'" [clrDgSortBy]="nameComparator">Soldier</clr-dg-column>
     <clr-dg-column [clrDgField]="'score'" [clrDgSortOrder]="descSort">
       Score

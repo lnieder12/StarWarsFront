@@ -14,7 +14,7 @@ import { GameService } from '../../services/game.service';
 })
 export class ScoreTableComponent {
 
-  @Input() scores?: Score[];
+  scores?: Score[];
   descSort = ClrDatagridSortOrder.DESC;
 
   scoreFilter = new ScoreFilter;
@@ -24,6 +24,8 @@ export class ScoreTableComponent {
   gameId: number = 0;
 
   total: number = 0;
+
+  loading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,6 +47,7 @@ export class ScoreTableComponent {
       this.gameService.getScoresPage(this.gameId, params)
         .subscribe(score => {
           this.scores = score;
+          this.loading = false;
         });
       this.gameService.getScoreCount(this.gameId, params)
         .subscribe(count => {
@@ -56,8 +59,7 @@ export class ScoreTableComponent {
 
   refresh(state: ClrDatagridStateInterface) {
 
-    console.log(state);
-
+    this.loading = true;
 
     var params = new HttpParams();
 
