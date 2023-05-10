@@ -67,8 +67,8 @@ export class ScoreTableComponent {
     if (state.filters) {
       for (let filter of state.filters) {
         if (filter.min || filter.max) {
-          const gt = filter.min ? `gt:${filter.min}` : '';
-          const lt = filter.max ? `lt:${filter.max}` : '';
+          const gt = filter.min ? `gte:${filter.min}` : '';
+          const lt = filter.max ? `lte:${filter.max}` : '';
           var between = gt;
           if (gt && lt) {
             between += ',';
