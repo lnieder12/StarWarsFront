@@ -36,7 +36,6 @@ export class ScoreTableComponent {
       this.gameService.getScores(this.gameId)
         .subscribe(score => {
           this.scores = score;
-          console.log(score);
         });
     }
   }
@@ -46,7 +45,6 @@ export class ScoreTableComponent {
       this.gameService.getScoresPage(this.gameId, params)
         .subscribe(score => {
           this.scores = score;
-          console.log(score);
         });
       this.gameService.getScoreCount(this.gameId, params)
         .subscribe(count => {
@@ -57,6 +55,8 @@ export class ScoreTableComponent {
   }
 
   refresh(state: ClrDatagridStateInterface) {
+
+    console.log(state);
 
 
     var params = new HttpParams();
@@ -99,12 +99,12 @@ export class ScoreTableComponent {
     }
 
     // Page
+    if (this.scores && this.scores.length > 0) {
+      const skip = state.page?.from ?? 0;
+      params = params.set('skip', skip);
+    }
     const limit = state.page?.size ?? 0;
     params = params.set('limit', limit);
-    if (this.scores) {
-      const lastId = this.scores[this.scores.length - 1].gsId;
-      // params = params.set('marker', lastId);
-    }
 
     // console.log(Object(params)['updates']);
     this.getPage(params);
