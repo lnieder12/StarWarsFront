@@ -1,15 +1,14 @@
-import { Component, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
-import { Round } from '../../interfaces/round';
-import { ActivatedRoute } from '@angular/router';
-import { RoundService } from 'src/app/services/round.service';
-import { ClrDatagridColumn, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
-import { AttackerComparator, DamageFilter, DefenderComparator, HpLeftFilter } from 'src/app/roundFilter';
-import { NumberFilterComponent } from 'src/app/number-filter.component';
-import { GameService } from 'src/app/services/game.service';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { ClrDatagridColumn, ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { NumberFilterComponent } from 'src/app/number-filter.component';
+import { AttackerComparator, DefenderComparator } from 'src/app/roundFilter';
+import { GameService } from 'src/app/services/game.service';
 import { setAllHttpParams } from 'src/httpParamsFunctions';
-
+import { Round } from '../../interfaces/round';
+import { delay } from 'src/app/delay';
 
 @Component({
   selector: 'app-rounds',
@@ -18,11 +17,11 @@ import { setAllHttpParams } from 'src/httpParamsFunctions';
 })
 export class RoundsComponent {
 
-  rounds?: Round[];
+  rounds: Round[] = [];
 
   gameId: number = 0;
 
-  loading: boolean = false;
+  loading: boolean = true;
 
   total: number = 0;
 
@@ -39,7 +38,7 @@ export class RoundsComponent {
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService
-  ) { }
+  ) {}
 
   clearSort(): void {
     this.columns?.forEach(col => {
@@ -65,7 +64,7 @@ export class RoundsComponent {
   refresh(state: ClrDatagridStateInterface) {
     this.loading = true;
 
-    var params = setAllHttpParams(state, this.rounds?.length ?? 0)
+    var params = setAllHttpParams(state, this.rounds?.length ?? 0);
 
     this.getPage(params);
   }
@@ -76,14 +75,11 @@ export class RoundsComponent {
     this.columns?.forEach(col => {
       console.log(col.filterValue);
       col.filterValue = null;
-      if (col.field == "damage") { }
-      // col.setFilter(this.damageFilter);
-    })
+    });
   }
 
   ngOnInit(): void {
     this.gameId = Number(this.route.snapshot.paramMap.get('id'));
-    this.getPage({} as HttpParams);
+    this.refresh({page: {size: 10}});
   }
-
 }

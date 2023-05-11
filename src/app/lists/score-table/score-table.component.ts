@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ClrDatagridSortOrder, ClrDatagridStateInterface } from '@clr/angular';
+import { setAllHttpParams } from 'src/httpParamsFunctions';
 import { Score } from '../../interfaces/scores';
 import { GameService } from '../../services/game.service';
-import { getFilters, setAllHttpParams, setPageLimit, setPageSkip, setSorting } from 'src/httpParamsFunctions';
+import { delay } from 'src/app/delay';
 
 @Component({
   selector: 'app-scores',
@@ -14,29 +15,19 @@ import { getFilters, setAllHttpParams, setPageLimit, setPageSkip, setSorting } f
 })
 export class ScoreTableComponent {
 
-  scores?: Score[];
+  scores: Score[] = [];
   descSort = ClrDatagridSortOrder.DESC;
 
   gameId: number = 0;
 
   total: number = 0;
 
-  loading: boolean = false;
+  loading: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
   ) { }
-
-  getAll(): void {
-
-    if (this.gameId) {
-      this.gameService.getScores(this.gameId)
-        .subscribe(score => {
-          this.scores = score;
-        });
-    }
-  }
 
   getPage(params: HttpParams): void {
     if (this.gameId) {
@@ -65,8 +56,6 @@ export class ScoreTableComponent {
 
   ngOnInit(): void {
     this.gameId = Number(this.route.snapshot.paramMap.get('id'));
-    //this.getAll();
-    this.getPage({} as HttpParams);
   }
 
 }

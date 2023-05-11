@@ -3,6 +3,7 @@ import { ClrDatagridStateInterface } from "@clr/angular";
 
 export function getFilters(state: ClrDatagridStateInterface, pParams: HttpParams): HttpParams
 {
+
   var params = pParams;
   if (state.filters) {
     for (let filter of state.filters) {
@@ -14,7 +15,7 @@ export function getFilters(state: ClrDatagridStateInterface, pParams: HttpParams
           between += ',';
         }
         between += lt;
-        params = params.set('score', between);
+        params = params.set(filter.field, between);
         // filters['score'] = [{ min: filter.min, max: filter.max }];
       }
       else {
@@ -50,9 +51,9 @@ export function setSorting(state: ClrDatagridStateInterface, pParams: HttpParams
 export function setPageSkip(state: ClrDatagridStateInterface, pParams: HttpParams, length: number): HttpParams
 {
   var params = pParams
-  if (length > 0) {
-    const skip = state.page?.from ?? 0;
-    params = params.set('skip', skip);
+  if (length > 0 && state.page && state.page.from) {
+      const skip = state.page.from > 0 ? state.page.from : 0;
+      params = params.set('skip', skip);
   }
 
   return params;

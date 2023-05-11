@@ -3,10 +3,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Coords } from 'src/app/interfaces/coords';
 import { Line } from 'src/app/interfaces/line';
 import { Round } from 'src/app/interfaces/round';
-
-function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { delay } from 'src/app/delay';
 
 @Component({
   selector: 'app-battlefield',
