@@ -40,12 +40,12 @@ export class SoldierService {
   }
 
   getNbValideRebels(id: number): Observable<number> {
-    const url = `${this._apiUrl + this._gameUrl}/${id}/rebel/valide`;
+    const url = `${this._apiUrl + this._gameUrl}/${id}/rebel/valid`;
     return this.http.get<number>(url);
   }
 
   getNbValideEmpires(id: number): Observable<number> {
-    const url = `${this._apiUrl + this._gameUrl}/${id}/empire/valide`;
+    const url = `${this._apiUrl + this._gameUrl}/${id}/empire/valid`;
     return this.http.get<number>(url);
   }
 
